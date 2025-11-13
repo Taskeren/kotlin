@@ -14,10 +14,14 @@ import org.gradle.api.file.RegularFile
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskProvider
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.InternalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinJsCompilerOptionsHelper
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
+import org.jetbrains.kotlin.gradle.plugin.categoryByName
 import org.jetbrains.kotlin.gradle.plugin.addToAssemble
+import org.jetbrains.kotlin.gradle.plugin.PropertiesProvider
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJsCompilation
+import org.jetbrains.kotlin.gradle.plugin.mpp.disambiguateName
 import org.jetbrains.kotlin.gradle.plugin.mpp.fileExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.isMain
 import org.jetbrains.kotlin.gradle.targets.js.KotlinWasmTargetType
@@ -191,6 +195,14 @@ interface WasmBinary {
     val linkTask: TaskProvider<KotlinJsIrLink>
 
     val optimizeTask: TaskProvider<BinaryenExec>
+
+    @InternalKotlinGradlePluginApi
+    val wasmBinaryConfigurationName
+        get() = compilation.disambiguateName("wasmBinary${name}Configuration")
+
+    @InternalKotlinGradlePluginApi
+    val wasmBinaryOutputConfigurationName
+        get() = compilation.disambiguateName("wasmBinary${name}OutputConfiguration")
 }
 
 internal fun TaskProvider<BinaryenExec>.configureOptimizeTask(binary: WasmBinary) {
@@ -260,7 +272,15 @@ class ExecutableWasm(
     name,
     mode
 ), WasmBinary {
+    private val wasmPerModule = PropertiesProvider(project).wasmPerModule
+
     override fun syncInputConfigure(syncTask: DefaultIncrementalSyncTask) {
+        if (wasmPerModule) {
+            val conf = project.configurations.named(wasmBinaryConfigurationName)
+
+            syncTask.from.from(conf)
+        }
+
         if (mode == KotlinJsBinaryMode.PRODUCTION) {
             // this is done in optimizeTask "also" block, because optimizeTask cannot be referenced on init stage
         } else {
@@ -294,6 +314,14 @@ class ExecutableWasm(
         it.outputDirectory.file(mainFileName.get())
     }
 
+    @InternalKotlinGradlePluginApi
+    override val wasmBinaryConfigurationName: String
+        get() = super.wasmBinaryConfigurationName
+
+    @InternalKotlinGradlePluginApi
+    override val wasmBinaryOutputConfigurationName: String
+        get() = super.wasmBinaryOutputConfigurationName
+
     private fun optimizeTaskName(): String =
         "${linkTaskName}Optimize"
 }
@@ -318,7 +346,15 @@ class LibraryWasm(
     name,
     mode
 ), WasmBinary {
+    private val wasmPerModule = PropertiesProvider(project).wasmPerModule
+
     override fun syncInputConfigure(syncTask: DefaultIncrementalSyncTask) {
+        if (wasmPerModule) {
+            val conf = project.configurations.named(wasmBinaryConfigurationName)
+
+            syncTask.from.from(conf)
+        }
+
         if (mode == KotlinJsBinaryMode.PRODUCTION) {
             syncTask.from.from(optimizeTask.flatMap { it.outputFileProperty.map { it.asFile.parentFile } })
             syncTask.dependsOn(optimizeTask)
@@ -347,6 +383,14 @@ class LibraryWasm(
     }.also { binaryenExec ->
         binaryenExec.configureOptimizeTask(this)
     }
+
+    @InternalKotlinGradlePluginApi
+    override val wasmBinaryConfigurationName: String
+        get() = super.wasmBinaryConfigurationName
+
+    @InternalKotlinGradlePluginApi
+    override val wasmBinaryOutputConfigurationName: String
+        get() = super.wasmBinaryOutputConfigurationName
 
     private fun optimizeTaskName(): String =
         "${linkTaskName}Optimize"
