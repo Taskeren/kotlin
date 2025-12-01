@@ -589,6 +589,8 @@ class ComposePluginRegistrar : CompilerPluginRegistrar() {
                 if (usesK2) null
                 else ComposeDescriptorSerializerContext()
 
+            setupJvmConfiguration(configuration)
+
             registerCommonExtensions(descriptorSerializerContext)
 
             IrGenerationExtension.registerExtension(
@@ -625,6 +627,17 @@ class ComposePluginRegistrar : CompilerPluginRegistrar() {
                 return false
             }
             return true
+        }
+
+        fun setupJvmConfiguration(configuration: CompilerConfiguration) {
+            configuration.put(
+                JVMConfigurationKeys.IGNORED_ANNOTATIONS_FOR_BRIDGES,
+                listOf(
+                    ComposeClassIds.Composable.asFqNameString(),
+                    ComposeClassIds.ComposableInferredTarget.asFqNameString(),
+                    ComposeClassIds.FunctionKeyMeta.asFqNameString(),
+                )
+            )
         }
 
         fun ExtensionStorage.registerCommonExtensions(
