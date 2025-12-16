@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.scripting.compiler.plugin.fir
 import com.intellij.psi.search.ProjectScope
 import org.jetbrains.kotlin.KtSourceFile
 import org.jetbrains.kotlin.KtVirtualFileSourceFile
+import org.jetbrains.kotlin.backend.common.pop
 import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
 import org.jetbrains.kotlin.cli.jvm.compiler.PsiBasedProjectFileSearchScope
 import org.jetbrains.kotlin.cli.jvm.compiler.VfsBasedProjectEnvironment
@@ -34,6 +35,7 @@ import org.jetbrains.kotlin.scripting.compiler.plugin.impl.refineAllForK2
 import org.jetbrains.kotlin.scripting.compiler.plugin.toCompilerMessageSeverity
 import org.jetbrains.kotlin.scripting.configuration.ScriptingConfigurationKeys
 import org.jetbrains.kotlin.scripting.resolve.toSourceCode
+import org.jetbrains.kotlin.utils.topologicalSort
 import java.io.File
 import kotlin.script.experimental.api.*
 import kotlin.script.experimental.host.FileBasedScriptSource
@@ -55,14 +57,20 @@ class FirProcessScriptSourcesExtension : FirProcessSourcesBeforeCompilingExtensi
     ): Iterable<KtSourceFile> {
         environment as VfsBasedProjectEnvironment
         val hostConfiguration = ensureUpdatedHostConfiguration(configuration)
-        return sources.flatMap { source ->
-            val script = source.toSourceCode()
+
+        fun SourceCode.collectImports(): List<SourceCode>? {
             val refinedScriptCompilationConfiguration =
-                hostConfiguration.getOrStoreRefinedCompilationConfiguration(script) { script, scriptCompilationConfiguration ->
-                    scriptCompilationConfiguration.refineAllForK2(script, hostConfiguration) { script, scriptCompilationConfiguration, hostConfiguration ->
+                hostConfiguration.getOrStoreRefinedCompilationConfiguration(this) { script, scriptCompilationConfiguration ->
+                    scriptCompilationConfiguration.refineAllForK2(script, hostConfiguration) { script, scriptCompilationConfiguration ->
                         collectAndResolveScriptAnnotationsViaFir(
                             script, scriptCompilationConfiguration, hostConfiguration,
-                            { _, _ -> getOrCreateSessionForAnnotationResolution(hostConfiguration, configuration, environment) },
+                            { _, scriptCompilationConfiguration ->
+                                getOrCreateSessionForAnnotationResolution(
+                                    scriptCompilationConfiguration[ScriptCompilationConfiguration.hostConfiguration] ?: hostConfiguration,
+                                    configuration,
+                                    environment
+                                )
+                            },
                             SourceCode::convertToFirViaLightTree
                         )
                     }
@@ -71,20 +79,52 @@ class FirProcessScriptSourcesExtension : FirProcessSourcesBeforeCompilingExtensi
                         configuration.report(report.severity.toCompilerMessageSeverity(), report.render(withSeverity = false))
                     }
                 }.valueOrNull()
-            refinedScriptCompilationConfiguration?.get(ScriptCompilationConfiguration.importScripts)?.takeIf { it.isNotEmpty() }
-                ?.let { importedSource ->
-                    listOf(source) + importedSource.mapNotNull {
-                        if (it is FileBasedScriptSource)
-                            environment.findFileByPath(it.file.path)?.let { virtualFile -> KtVirtualFileSourceFile(virtualFile) } ?: run {
-                                configuration.report(
-                                    CompilerMessageSeverity.ERROR,
-                                    "Unable to find imported script ${it.file}"
-                                )
-                                null
-                            }
-                        else null // TODO: support non-file sources
+            return refinedScriptCompilationConfiguration?.get(ScriptCompilationConfiguration.importScripts)?.takeIf { it.isNotEmpty() }
+        }
+
+        fun toSourceFile(import: SourceCode): KtVirtualFileSourceFile? =
+            if (import is FileBasedScriptSource)
+                environment.findFileByPath(import.file.path)?.let { virtualFile -> KtVirtualFileSourceFile(virtualFile) } ?: run {
+                    configuration.report(
+                        CompilerMessageSeverity.ERROR,
+                        "Unable to find imported script ${import.file}"
+                    )
+                    null
+                }
+            else null  // TODO: support non-file sources
+
+
+        val sourcesToFiles = sources.associateByTo(mutableMapOf(), KtSourceFile::toSourceCode)
+        val remainingSources = ArrayList<SourceCode>().also { it.addAll(sourcesToFiles.keys) }
+        val knownSources = sourcesToFiles.keys.mapTo(mutableSetOf()) { it.locationId }
+        val sourceDependencies = mutableMapOf<SourceCode, List<SourceCode>>()
+
+        while (remainingSources.isNotEmpty()) {
+            val sourceCode = remainingSources.pop()
+            sourceCode.collectImports()?.let { imports ->
+                imports.filter { knownSources.add(it.locationId) }.forEach { newImport ->
+                    remainingSources.add(newImport)
+                    toSourceFile(newImport)?.let {
+                        sourcesToFiles[newImport] = it
                     }
-                } ?: listOf(source)
+                }
+                sourceDependencies[sourceCode] = imports
+            }
+        }
+
+        class CycleDetected(val node: SourceCode) : Throwable()
+        return try {
+            topologicalSort(
+                sourcesToFiles.keys, reportCycle = { throw CycleDetected(it) }
+            ) {
+                sourceDependencies[this] ?: emptyList()
+            }.reversed().mapNotNull { sourcesToFiles[it] }
+        } catch (e: CycleDetected) {
+            configuration.report(
+                CompilerMessageSeverity.ERROR,
+                "Unable to handle recursive script dependencies, cycle detected on file ${e.node.name ?: e.node.locationId}",
+            )
+            sourcesToFiles.values
         }
     }
 
