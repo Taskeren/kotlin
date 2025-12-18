@@ -9,6 +9,7 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotationList
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
 import org.jetbrains.kotlin.analysis.api.fir.annotations.KaFirAnnotationListForDeclaration
+import org.jetbrains.kotlin.analysis.api.impl.base.annotations.KaBaseEmptyAnnotationList
 import org.jetbrains.kotlin.analysis.api.impl.base.symbols.pointers.KaBaseBackingFieldSymbolPointer
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KaBackingFieldSymbol
@@ -16,8 +17,10 @@ import org.jetbrains.kotlin.analysis.api.symbols.KaKotlinPropertySymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KaSymbolOrigin
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
 import org.jetbrains.kotlin.analysis.api.types.KaType
+import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
 import org.jetbrains.kotlin.fir.symbols.impl.FirBackingFieldSymbol
 import org.jetbrains.kotlin.psi.KtBackingField
+import org.jetbrains.kotlin.psi.KtCallableDeclaration
 
 internal class KaFirBackingFieldSymbol private constructor(
     override val backingPsi: KtBackingField?,
@@ -55,7 +58,13 @@ internal class KaFirBackingFieldSymbol private constructor(
         get() = withValidityAssertion { firSymbol.returnType(analysisSession.firSymbolBuilder) }
 
     override val annotations: KaAnnotationList
-        get() = withValidityAssertion { KaFirAnnotationListForDeclaration.create(firSymbol, builder) }
+        get() = withValidityAssertion {
+            if (!backingPsi?.annotationEntries.isNullOrEmpty() || backingOwningProperty.mayHaveBackingFieldAnnotation()) {
+                KaFirAnnotationListForDeclaration.create(firSymbol, builder)
+            } else {
+                KaBaseEmptyAnnotationList(token)
+            }
+        }
 
     override fun createPointer(): KaSymbolPointer<KaBackingFieldSymbol> = withValidityAssertion {
         return psiBasedSymbolPointerOfTypeIfSource<KaBackingFieldSymbol>()
@@ -69,5 +78,24 @@ internal class KaFirBackingFieldSymbol private constructor(
 
     override fun hashCode(): Int {
         return 31 * backingOwningProperty.hashCode() + KaFirKotlinPropertySymbol.HASH_CODE_ADDITION_FOR_BACKING_FIELD
+    }
+}
+
+/**
+ * Checks whether the property may have annotations on its backing field without performing any resolution.
+ *
+ * The function is tailored for source properties with a backing PSI.
+ * The compiler preserves annotations on backing fields for properties coming from libraries, so for them the FIR tree needs to be
+ * checked directly. However, the FIR tree for compiled declarations is already resolved, so a direct check is virtually free.
+ */
+private fun KaKotlinPropertySymbol.mayHaveBackingFieldAnnotation(): Boolean {
+    // A property or a primary constructor parameter.
+    val psi = psi as? KtCallableDeclaration ?: return true
+
+    return psi.annotationEntries.any {
+        when (it.useSiteTarget?.getAnnotationUseSiteTarget()) {
+            null, AnnotationUseSiteTarget.FIELD, AnnotationUseSiteTarget.PROPERTY_DELEGATE_FIELD, AnnotationUseSiteTarget.ALL -> true
+            else -> false
+        }
     }
 }
