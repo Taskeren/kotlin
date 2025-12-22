@@ -14,7 +14,6 @@ dependencies {
     implementation(project(":compiler:cli-base"))
 
     compileOnly(intellijCore())
-    compileOnly(project(":compiler:cli-common"))
 }
 
 optInToUnsafeDuringIrConstructionAPI()
