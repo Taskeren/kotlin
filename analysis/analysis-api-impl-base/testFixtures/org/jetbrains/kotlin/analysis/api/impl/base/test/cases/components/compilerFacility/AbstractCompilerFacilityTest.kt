@@ -23,6 +23,9 @@ import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.jvm.config.JvmClasspathRoot
 import org.jetbrains.kotlin.codegen.BytecodeListingTextCollectingVisitor
 import org.jetbrains.kotlin.codegen.forTestCompile.ForTestCompileRuntime
+import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
+import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
+import org.jetbrains.kotlin.compiler.plugin.registerInProject
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
@@ -85,6 +88,7 @@ abstract class AbstractCompilerFacilityTest : AbstractAnalysisApiBasedTest() {
         super.doTestByMainModuleAndOptionalMainFile(mainFile, mainModule, testServices)
     }
 
+    @OptIn(ExperimentalCompilerApi::class)
     override fun doTestByMainFile(mainFile: KtFile, mainModule: KtTestModule, testServices: TestServices) {
         val testFile = mainModule.testModule.files.single { it.name == mainFile.name }
 
@@ -92,8 +96,10 @@ abstract class AbstractCompilerFacilityTest : AbstractAnalysisApiBasedTest() {
         val irCollector = CollectingIrGenerationExtension(annotationToCheckCalls)
 
         val project = mainFile.project
-        project.extensionArea.getExtensionPoint(IrGenerationExtension.extensionPointName)
-            .registerExtension(irCollector, LoadingOrder.LAST, project)
+        with(CompilerPluginRegistrar.ExtensionStorage()) {
+            IrGenerationExtension.registerExtension(irCollector)
+            registerInProject(project)
+        }
 
         val compilerConfiguration = CompilerConfiguration().apply {
             put(CommonConfigurationKeys.MODULE_NAME, mainModule.testModule.name)
