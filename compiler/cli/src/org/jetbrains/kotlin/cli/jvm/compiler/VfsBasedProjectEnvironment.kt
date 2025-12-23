@@ -187,7 +187,7 @@ open class VfsBasedProjectEnvironment(
         PsiBasedProjectFileSearchScope(ProjectScope.getLibrariesScope(project))
 
     override fun getSearchScopeForProjectJavaSources(): AbstractProjectFileSearchScope =
-        PsiBasedProjectFileSearchScope(TopDownAnalyzerFacadeForJVM.AllJavaSourcesInProjectScope(project))
+        PsiBasedProjectFileSearchScope(AllJavaSourcesInProjectScope(project))
 
     override fun getFirJavaFacade(
         firSession: FirSession,
