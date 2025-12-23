@@ -42,9 +42,9 @@ class KotlinStandaloneFirCompilerPluginsProvider(compilerConfiguration: Compiler
         val extension = when (pluginType) {
             CompilerPluginType.ASSIGNMENT -> FirAssignExpressionAltererExtension::class
         }
-
         return getRegisteredExtensions(module, FirExtensionRegistrarAdapter)
             .map { (it as FirExtensionRegistrar).configure() }
             .any { it.extensions[extension]?.isNotEmpty() == true }
+
     }
 }
