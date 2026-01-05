@@ -15,16 +15,16 @@ import org.jetbrains.kotlin.fir.expressions.FirFunctionCall
 import org.jetbrains.kotlin.fir.expressions.FirLiteralExpression
 import org.jetbrains.kotlin.fir.expressions.arguments
 import org.jetbrains.kotlin.fir.references.toResolvedNamedFunctionSymbol
+import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.name.Name
 
 object FirTrimMarginBlankPrefixChecker : FirFunctionCallChecker(MppCheckerKind.Common) {
-    private val defaultPackageName = StandardNames.TEXT_PACKAGE_FQ_NAME
-    private val defaultTrimMarginName = Name.identifier(String::trimMargin.name)
+    private val trimMarginCallableId = CallableId(StandardNames.TEXT_PACKAGE_FQ_NAME, Name.identifier(String::trimMargin.name))
 
     context(context: CheckerContext, reporter: DiagnosticReporter)
     override fun check(expression: FirFunctionCall) {
         val callableId = expression.calleeReference.toResolvedNamedFunctionSymbol()?.callableId
-        if (callableId != null && callableId.packageName == defaultPackageName && callableId.callableName == defaultTrimMarginName) {
+        if (callableId == trimMarginCallableId) {
             val firstValue = (expression.arguments.singleOrNull() as? FirLiteralExpression)?.value
             if (firstValue != null && firstValue is String && firstValue.isBlank()) {
                 reporter.reportOn(expression.source, FirErrors.TRIM_MARGIN_BLANK_PREFIX)
