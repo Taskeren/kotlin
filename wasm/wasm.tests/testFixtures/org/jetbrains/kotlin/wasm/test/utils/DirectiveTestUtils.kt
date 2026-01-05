@@ -5,10 +5,14 @@
 
 package org.jetbrains.kotlin.wasm.test.utils
 
+import org.jetbrains.kotlin.fir.resolve.traverseDepthFirstWithoutDuplicates
 import org.jetbrains.kotlin.test.InTextDirectivesUtils.findLinesWithPrefixesRemoved
 import org.jetbrains.kotlin.test.TargetBackend
+import org.jetbrains.kotlin.wasm.ir.WasmFunction
+import org.jetbrains.kotlin.wasm.ir.WasmImmediate
 import org.jetbrains.kotlin.wasm.ir.WasmModule
 import org.jetbrains.kotlin.wasm.ir.WasmOp
+import org.jetbrains.kotlin.wasm.ir.firstImmediateOrNull
 import org.junit.Assert.*
 import org.junit.runners.model.MultipleFailureException
 
@@ -74,6 +78,35 @@ object DirectiveTestUtils {
         val actualCount = WasmIrCheckUtils.countInstOperator(scopeFunction, operator)
 
         assertEquals("Count mismatch for instruction `$instruction` in function `$scopeFunctionName`", expectedCount, actualCount)
+    }
+
+    private val LOCAL_IN_SCOPE = createSimpleDirectiveHandler("WASM_CHECK_LOCAL_IN_SCOPE") { module, arguments ->
+        checkLocalInScope(module, arguments, true)
+    }
+
+    private val LOCAL_NOT_IN_SCOPE = createSimpleDirectiveHandler("WASM_CHECK_LOCAL_NOT_IN_SCOPE") { module, arguments ->
+        checkLocalInScope(module, arguments, false)
+    }
+
+    private fun checkLocalInScope(module: WasmModule, arguments: ArgumentsHelper, expectExists: Boolean) {
+        val localName = arguments.getNamedArgument("name")
+        val scopeFunctionName = arguments.getNamedArgument("scope_function")
+
+        val scopeFunction = WasmIrCheckUtils.getDefinedFunction(module, scopeFunctionName)
+
+        var locals = scopeFunction.locals
+
+        // add locals of any (nested) lambdas
+        // there will be quite a bit of unnecessary ones in here, but we only need to get the real ones as well.
+        // TODO(review): would be nicer to have a more robust solution here than text search. Somehow getting from the name of the local that holds the lambda, to the lambda's invoke function, that has the actual locals we're searching for
+        module.definedFunctions.filter { it.name.contains(Regex("$scopeFunctionName(\\\$lambda)+\\.invoke")) }.forEach { lambda -> locals += lambda.locals }
+
+        val local = locals.find { it.name == localName }
+
+        if(expectExists)
+            assertNotNull("Local variable `$localName` *not* found in function `${scopeFunction.name}`", local)
+        else
+            assertNull("Local variable `$localName` found in function `${scopeFunction.name}`", local)
     }
 
     private fun checkFunctionContainsNoCalls(module: WasmModule, functionName: String, exceptFunctionNames: Set<String>) {
@@ -149,6 +182,8 @@ object DirectiveTestUtils {
         FUNCTION_NOT_CALLED_IN_SCOPE,
         INSTRUCTION_NOT_IN_SCOPE,
         COUNT_INSTRUCTION_IN_SCOPE,
+        LOCAL_IN_SCOPE,
+        LOCAL_NOT_IN_SCOPE,
     )
 
     @Throws(Exception::class)
