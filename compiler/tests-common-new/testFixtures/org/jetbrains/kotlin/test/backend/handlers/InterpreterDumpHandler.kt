@@ -13,7 +13,6 @@ import org.jetbrains.kotlin.constant.AnnotationValue
 import org.jetbrains.kotlin.constant.ErrorValue
 import org.jetbrains.kotlin.constant.EvaluatedConstTracker
 import org.jetbrains.kotlin.fir.FirElement
-import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.backend.ConstValueProviderImpl
 import org.jetbrains.kotlin.fir.declarations.FirFile
 import org.jetbrains.kotlin.fir.declarations.FirProperty
@@ -21,7 +20,6 @@ import org.jetbrains.kotlin.fir.declarations.utils.evaluatedInitializer
 import org.jetbrains.kotlin.fir.expressions.FirAnnotationCall
 import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.FirLiteralExpression
-import org.jetbrains.kotlin.fir.expressions.FirExpressionEvaluator
 import org.jetbrains.kotlin.fir.types.FirResolvedTypeRef
 import org.jetbrains.kotlin.fir.unwrapOr
 import org.jetbrains.kotlin.fir.visitors.FirVisitor
@@ -164,14 +162,14 @@ class FirInterpreterDumpHandler(testServices: TestServices) : FirAnalysisHandler
         val results = buildMap {
             info.partsForDependsOnModules.forEach {
                 it.firFilesByTestFile.forEach { (testFile, firFile) ->
-                    putAll(processFile(testFile, firFile, it.session))
+                    putAll(processFile(testFile, firFile))
                 }
             }
         }
         testServices.firInterpreterResultsStorage[module] = results
     }
 
-    private fun processFile(testFile: TestFile, firFile: FirFile, session: FirSession): Map<TestFile, List<ParsedCodeMetaInfo>> {
+    private fun processFile(testFile: TestFile, firFile: FirFile): Map<TestFile, List<ParsedCodeMetaInfo>> {
         val resultMap = mutableMapOf<TestFile, MutableList<ParsedCodeMetaInfo>>()
         val rangesThatAreNotSupposedToBeRendered = testFile.extractRangesWithoutRender()
 

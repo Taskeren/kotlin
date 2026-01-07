@@ -166,22 +166,22 @@ fun FirAnnotation.findArgumentByName(name: Name, returnFirstWhenNotFound: Boolea
     return if (!resolved && returnFirstWhenNotFound) arguments.firstOrNull() else null
 }
 
-fun FirAnnotation.getBooleanArgument(name: Name, session: FirSession): Boolean? = getPrimitiveArgumentValue(name, session)
-fun FirAnnotation.getStringArgument(name: Name, session: FirSession): String? = getPrimitiveArgumentValue(name, session)
+fun FirAnnotation.getBooleanArgument(name: Name): Boolean? = getPrimitiveArgumentValue(name)
+fun FirAnnotation.getStringArgument(name: Name): String? = getPrimitiveArgumentValue(name)
 
-private inline fun <reified T> FirAnnotation.getPrimitiveArgumentValue(name: Name, session: FirSession): T? {
+private inline fun <reified T> FirAnnotation.getPrimitiveArgumentValue(name: Name): T? {
     val argument = findArgumentByName(name) ?: return null
     val literal = argument as? FirLiteralExpression ?: return null
     return literal.value as? T
 }
 
-fun FirAnnotation.getStringArrayArgument(name: Name, session: FirSession): List<String>? {
+fun FirAnnotation.getStringArrayArgument(name: Name): List<String>? {
     val argument = findArgumentByName(name) ?: return null
     val arrayLiteral = argument as? FirCollectionLiteral ?: return null
     return arrayLiteral.arguments.mapNotNull { (it as? FirLiteralExpression)?.value as? String }
 }
 
-fun FirAnnotation.getKClassArgument(name: Name, session: FirSession): ConeKotlinType? {
+fun FirAnnotation.getKClassArgument(name: Name): ConeKotlinType? {
     val argument = findArgumentByName(name) ?: return null
     val getClassCall = argument as? FirGetClassCall ?: return null
     return getClassCall.getTargetType()
