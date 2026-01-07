@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.extensions.ProjectExtensionDescriptor
 abstract class CompilerPluginRegistrar {
     companion object {
         val COMPILER_PLUGIN_REGISTRARS: CompilerConfigurationKey<MutableList<CompilerPluginRegistrar>> =
-            CompilerConfigurationKey.create("Compiler plugin registrars")
+            CompilerConfigurationKey.create("COMPILER_PLUGIN_REGISTRARS")
     }
 
     /**
@@ -102,4 +102,4 @@ fun registerExtensionsForTest(
  * This key is allowed to be used ONLY in tests
  */
 val TEST_ONLY_PLUGIN_REGISTRATION_CALLBACK: CompilerConfigurationKey<(Project) -> Unit> =
-    CompilerConfigurationKey.create("Compiler plugin registrars for tests")
+    CompilerConfigurationKey.create("TEST_ONLY_PLUGIN_REGISTRATION_CALLBACK")
