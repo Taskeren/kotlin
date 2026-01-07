@@ -17,8 +17,9 @@ import org.jetbrains.kotlin.config.CompilerConfigurationKey
 import org.jetbrains.kotlin.diagnostics.KtRegisteredDiagnosticFactoriesStorage
 
 object FrontendConfigurationKeys {
+    // Container of all registered diagnostic factories.
     @JvmField
-    val DIAGNOSTIC_FACTORIES_STORAGE = CompilerConfigurationKey.create<KtRegisteredDiagnosticFactoriesStorage>("Container of all registered diagnostic factories")
+    val DIAGNOSTIC_FACTORIES_STORAGE = CompilerConfigurationKey.create<KtRegisteredDiagnosticFactoriesStorage>("DIAGNOSTIC_FACTORIES_STORAGE")
 
 }
 
