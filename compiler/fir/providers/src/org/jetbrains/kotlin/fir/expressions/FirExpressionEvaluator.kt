@@ -82,14 +82,11 @@ object FirExpressionEvaluator {
         return initializer.evaluate(session)
     }
 
-    fun evaluateAnnotationArguments(annotation: FirAnnotation, session: FirSession): Map<Name, FirEvaluatorResult>? {
+    fun evaluateAnnotationArguments(annotation: FirAnnotation, session: FirSession): Map<Name, FirEvaluatorResult> {
         val argumentMapping = annotation.argumentMapping.mapping
-
-        if (argumentMapping.values.any { expr -> !expr.canBeEvaluated(session) }) {
-            return null
+        return argumentMapping.mapValues { (_, expression) ->
+            if (expression.canBeEvaluated(session)) expression.evaluate(session) else NotEvaluated
         }
-
-        return argumentMapping.mapValues { (_, expression) -> expression.evaluate(session) }
     }
 
     @PrivateConstantEvaluatorAPI
