@@ -12,7 +12,9 @@ import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.declarations.fullyExpandedClass
 import org.jetbrains.kotlin.fir.declarations.hasAnnotation
 import org.jetbrains.kotlin.fir.declarations.utils.evaluatedInitializer
+import org.jetbrains.kotlin.fir.declarations.utils.isAnnotationClass
 import org.jetbrains.kotlin.fir.declarations.utils.isConst
+import org.jetbrains.kotlin.fir.declarations.utils.isEnumClass
 import org.jetbrains.kotlin.fir.declarations.utils.isStatic
 import org.jetbrains.kotlin.fir.declarations.utils.modality
 import org.jetbrains.kotlin.fir.references.FirErrorNamedReference
@@ -20,6 +22,7 @@ import org.jetbrains.kotlin.fir.references.FirResolvedErrorReference
 import org.jetbrains.kotlin.fir.references.FirResolvedNamedReference
 import org.jetbrains.kotlin.fir.references.toResolvedCallableSymbol
 import org.jetbrains.kotlin.fir.resolve.fullyExpandedType
+import org.jetbrains.kotlin.fir.resolve.toRegularClassSymbol
 import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.*
@@ -30,6 +33,18 @@ import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.util.OperatorNameConventions
 
 fun ConeKotlinType.canBeUsedForConstVal(): Boolean = with(lowerBoundIfFlexible()) { isPrimitive || isString || isUnsignedType }
+fun ConeKotlinType.canBeUsedForAnnotationParameter(session: FirSession): Boolean {
+    if (canBeUsedForConstVal()) return true
+    val type = lowerBoundIfFlexible()
+    if (type.isKClassType()) return true
+    if (type.isArrayType) {
+        if (type.isPrimitiveArray || type.isUnsignedArray) return true
+        val arrayElementType = (type.typeArguments.firstOrNull() as? ConeKotlinTypeProjection)?.type ?: return false
+        return arrayElementType.canBeUsedForAnnotationParameter(session)
+    }
+    val correspondingClass = type.toRegularClassSymbol(session) ?: return false
+    return correspondingClass.isEnumClass || correspondingClass.isAnnotationClass
+}
 
 /**
  * See the documentation to [computeConstantExpressionKind] function below
