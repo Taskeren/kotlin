@@ -124,7 +124,7 @@ if (!project.hasProperty("versions.kotlin-native")) {
     extra["versions.kotlin-native"] = if (kotlinBuildProperties.isTeamcityBuild.get()) {
         kotlinVersion
     } else if (kotlinBuildProperties.isKotlinNativeEnabled.get()) {
-        kotlinBuildProperties.defaultSnapshotVersion
+        kotlinBuildProperties.defaultSnapshotVersion.get()
     } else {
         "2.3.20-dev-4897"
     }
