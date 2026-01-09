@@ -342,8 +342,8 @@ class LauncherScriptTest : TestCaseWithTmpdir() {
         runProcess(
             "kotlin", "-howtorun", ".main.kts", "$testDataDirectory/noInline.myscript",
             expectedExitCode = 3,
-            expectedStderr = """java.lang.IllegalAccessError: tried to access method kotlin.io.ConsoleKt.println(Ljava/lang/Object;)V from class NoInline_main
-	at NoInline_main.<init>(noInline.myscript:3)
+            expectedStderr = """java.lang.IllegalAccessError: tried to access method kotlin.io.ConsoleKt.println(Ljava/lang/Object;)V from class NoInline
+	at NoInline.<init>(noInline.myscript:3)
 """
         )
     }
