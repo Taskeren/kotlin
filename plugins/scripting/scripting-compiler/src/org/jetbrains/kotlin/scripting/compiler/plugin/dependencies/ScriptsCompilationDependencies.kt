@@ -16,7 +16,6 @@ import kotlin.script.experimental.api.ScriptDiagnostic
 import kotlin.script.experimental.api.SourceCode
 import kotlin.script.experimental.api.asSuccess
 import kotlin.script.experimental.api.dependencies
-import kotlin.script.experimental.api.importScripts
 import kotlin.script.experimental.api.valueOrNull
 import kotlin.script.experimental.host.FileScriptSource
 import kotlin.script.experimental.jvm.util.toClassPathOrEmpty

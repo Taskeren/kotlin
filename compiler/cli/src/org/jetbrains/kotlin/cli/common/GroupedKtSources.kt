@@ -27,9 +27,6 @@ import org.jetbrains.kotlin.idea.KotlinFileType
 import java.io.File
 import java.util.TreeSet
 
-private const val kotlinFileExtensionWithDot = ".${KotlinFileType.EXTENSION}"
-private const val javaFileExtensionWithDot = ".${JavaFileType.DEFAULT_EXTENSION}"
-
 data class GroupedKtSources(
     val platformSources: Collection<KtSourceFile>,
     val commonSources: Collection<KtSourceFile>,
