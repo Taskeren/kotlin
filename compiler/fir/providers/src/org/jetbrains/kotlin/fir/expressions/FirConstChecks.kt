@@ -278,6 +278,7 @@ private class FirConstCheckVisitor(
             // Better to report "UNRESOLVED_REFERENCE" later than some "NOT_CONST" diagnostic right now.
             null -> return ConstantArgumentKind.RESOLUTION_ERROR
             is FirPropertySymbol -> {
+                if (propertySymbol.fir.returnTypeRef !is FirResolvedTypeRef) return ConstantArgumentKind.NOT_CONST
                 val classKindOfParent = (propertySymbol.getReferencedClassSymbol() as? FirRegularClassSymbol)?.classKind
                 if (classKindOfParent == ClassKind.ENUM_CLASS) {
                     return ConstantArgumentKind.ENUM_NOT_CONST
