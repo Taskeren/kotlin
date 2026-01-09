@@ -5,9 +5,13 @@
 
 package org.jetbrains.kotlin.scripting.compiler.plugin.definitions
 
+import org.jetbrains.kotlin.scripting.definitions.ScriptConfigurationsProvider
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptCompilationConfiguration
 import kotlin.script.experimental.api.SourceCode
+import kotlin.script.experimental.api.asSuccess
+import kotlin.script.experimental.api.onSuccess
+import kotlin.script.experimental.api.valueOrNull
 import kotlin.script.experimental.host.ScriptingHostConfiguration
 import kotlin.script.experimental.host.with
 
@@ -31,8 +35,21 @@ class ScriptRefinedCompilationConfigurationCacheImpl : ScriptRefinedCompilationC
     }
 }
 
-fun ScriptingHostConfiguration.withRefinedCompilationConfigurationCache(
-    implementation : ScriptRefinedCompilationConfigurationCache = ScriptRefinedCompilationConfigurationCacheImpl()
-): ScriptingHostConfiguration = with {
-    ScriptingHostConfiguration.scriptRefinedCompilationConfigurationsCache(implementation)
+class ScriptRefinedCompilationConfigurationCacheOverConfigurationsProvider(
+    private val legacyConfigurationsProvider: ScriptConfigurationsProvider,
+    private val definitionsProvider: ScriptCompilationConfigurationProvider?
+) : ScriptRefinedCompilationConfigurationCache {
+
+    override fun getRefinedCompilationConfiguration(sourceCode: SourceCode): ResultWithDiagnostics<ScriptCompilationConfiguration>? =
+        definitionsProvider?.findBaseCompilationConfiguration(sourceCode).let { providedConfiguration ->
+            legacyConfigurationsProvider.getScriptCompilationConfiguration(sourceCode, providedConfiguration?.valueOrNull())
+                ?.onSuccess { it.configuration?.asSuccess() ?: return@getRefinedCompilationConfiguration null }
+        }
+
+    override fun storeRefinedCompilationConfiguration(
+        sourceCode: SourceCode,
+        configuration: ResultWithDiagnostics<ScriptCompilationConfiguration>,
+    ): ResultWithDiagnostics<ScriptCompilationConfiguration>? = null
+
+    override fun clearRefinedCompilationConfiguration(sourceCode: SourceCode): ResultWithDiagnostics<ScriptCompilationConfiguration>? = null
 }
