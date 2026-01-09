@@ -6,9 +6,11 @@
 package org.jetbrains.kotlin.fir.extensions
 
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.kotlin.KtSourceFile
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.extensions.ProjectExtensionDescriptor
+import java.io.File
 
 abstract class FirProcessSourcesBeforeCompilingExtension {
     companion object : ProjectExtensionDescriptor<FirProcessSourcesBeforeCompilingExtension>(
@@ -29,11 +31,12 @@ abstract class FirProcessSourcesBeforeCompilingExtension {
             project: Project,
             environment: Any, // TODO: actually the VfsBasedProjectEnvironment is needed here, so we need to refactor dependencies to allow it
             configuration: CompilerConfiguration,
-            sources: Iterable<KtSourceFile>
+            findVirtualFile: (File) -> VirtualFile?,
+            sources: Iterable<KtSourceFile>,
         ): Iterable<KtSourceFile>? {
             val extensions = getInstances(project).filter { it.isApplicable(configuration) }
             return if (extensions.isEmpty()) sources
-            else extensions.fold(sources) { res, ext -> ext.doProcessSources(environment, configuration, res) }
+            else extensions.fold(sources) { res, ext -> ext.doProcessSources(environment, configuration, findVirtualFile, res) }
         }
     }
 
@@ -53,6 +56,7 @@ abstract class FirProcessSourcesBeforeCompilingExtension {
     abstract fun doProcessSources(
         environment: Any, // see the comment to [processSources] above
         configuration: CompilerConfiguration,
+        findVirtualFile: (File) -> VirtualFile?,
         sources: Iterable<KtSourceFile>,
     ): Iterable<KtSourceFile>
 }

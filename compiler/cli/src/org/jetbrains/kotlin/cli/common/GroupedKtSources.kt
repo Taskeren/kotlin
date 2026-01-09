@@ -6,9 +6,8 @@
 package org.jetbrains.kotlin.cli.common
 
 import com.intellij.ide.highlighter.JavaFileType
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.StandardFileSystems
-import com.intellij.openapi.vfs.VirtualFileSystem
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.isFile
 import org.jetbrains.kotlin.KtSourceFile
 import org.jetbrains.kotlin.KtVirtualFileSourceFile
@@ -25,6 +24,7 @@ import org.jetbrains.kotlin.extensions.CompilerConfigurationExtension
 import org.jetbrains.kotlin.extensions.PreprocessedFileCreator
 import org.jetbrains.kotlin.fir.extensions.FirProcessSourcesBeforeCompilingExtension
 import org.jetbrains.kotlin.idea.KotlinFileType
+import java.io.File
 import java.util.TreeSet
 
 private const val kotlinFileExtensionWithDot = ".${KotlinFileType.EXTENSION}"
@@ -73,11 +73,15 @@ fun collectSources(
             pluginsConfigured = true
         }
     }
+
+    fun findVirtualFile(file: File): VirtualFile? =
+        projectEnvironment.knownFileSystems.findFileByPath(file.normalize().absolutePath, StandardFileSystems.FILE_PROTOCOL)
+
     getSourceRootsCheckingForDuplicates(compilerConfiguration, messageCollector)
         .allSourceFilesSequence(
             compilerConfiguration,
             reportLocation = null,
-            findVirtualFile = { projectEnvironment.knownFileSystems.findFileByPath(it.path, StandardFileSystems.FILE_PROTOCOL) },
+            findVirtualFile = ::findVirtualFile,
             accept = { virtualFile, isExplicit ->
                 when (virtualFile.extension) {
                     JavaFileType.DEFAULT_EXTENSION -> false
@@ -102,7 +106,7 @@ fun collectSources(
                 else {
                     // currently applying the extension only to non-kt files, e.g. scripts
                     FirProcessSourcesBeforeCompilingExtension.processSources(
-                        projectEnvironment.project, projectEnvironment, compilerConfiguration, sources
+                        projectEnvironment.project, projectEnvironment, compilerConfiguration, ::findVirtualFile, sources
                     ) ?: sources
                 }
             }

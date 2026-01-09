@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.scripting.compiler.plugin.fir
 
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.search.ProjectScope
 import org.jetbrains.kotlin.KtSourceFile
 import org.jetbrains.kotlin.KtVirtualFileSourceFile
@@ -12,7 +13,6 @@ import org.jetbrains.kotlin.backend.common.pop
 import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
 import org.jetbrains.kotlin.cli.jvm.compiler.PsiBasedProjectFileSearchScope
 import org.jetbrains.kotlin.cli.jvm.compiler.VfsBasedProjectEnvironment
-import org.jetbrains.kotlin.cli.jvm.compiler.findFileByPath
 import org.jetbrains.kotlin.cli.jvm.compiler.report
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
 import org.jetbrains.kotlin.compiler.plugin.registerInProject
@@ -54,6 +54,7 @@ class FirProcessScriptSourcesExtension : FirProcessSourcesBeforeCompilingExtensi
     override fun doProcessSources(
         environment: Any,
         configuration: CompilerConfiguration,
+        findVirtualFile: (File) -> VirtualFile?,
         sources: Iterable<KtSourceFile>
     ): Iterable<KtSourceFile> {
         environment as VfsBasedProjectEnvironment
@@ -99,7 +100,7 @@ class FirProcessScriptSourcesExtension : FirProcessSourcesBeforeCompilingExtensi
 
         fun toSourceFile(import: SourceCode): KtVirtualFileSourceFile? =
             if (import is FileBasedScriptSource)
-                environment.findFileByPath(import.file.path)?.let { virtualFile -> KtVirtualFileSourceFile(virtualFile) } ?: run {
+                findVirtualFile(import.file)?.let { virtualFile -> KtVirtualFileSourceFile(virtualFile) } ?: run {
                     configuration.report(
                         CompilerMessageSeverity.ERROR,
                         "Unable to find imported script ${import.file}"

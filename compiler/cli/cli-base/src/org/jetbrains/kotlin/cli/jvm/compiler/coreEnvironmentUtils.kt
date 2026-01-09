@@ -58,7 +58,7 @@ fun List<KotlinSourceRoot>.forAllFiles(
     allSourceFilesSequence(
         configuration,
         reportLocation,
-        findVirtualFile = { localFileSystem.findFileByPath(it.path) },
+        findVirtualFile = { localFileSystem.findFileByPath(it.normalize().absolutePath) },
         accept = { virtualFile, isExplicit ->
             if (virtualFile.extension != KotlinFileType.EXTENSION)
                 ensurePluginsConfigured()
