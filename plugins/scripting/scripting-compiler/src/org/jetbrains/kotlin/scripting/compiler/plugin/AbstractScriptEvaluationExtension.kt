@@ -130,7 +130,7 @@ abstract class AbstractScriptEvaluationExtension : ScriptEvaluationExtension {
                 }
                 if (script == null && defaultScriptExtension != null) {
                     script = ExplicitlyNamedFileScriptSource(
-                        scriptFile.nameWithoutExtension + defaultScriptExtension, scriptFile
+                        scriptFile.name.removeSuffix(".kts") + defaultScriptExtension, scriptFile
                     ).takeIf {
                         scriptDefinitionProvider.isScript(it)
                     }
