@@ -100,7 +100,7 @@ class FirProcessScriptSourcesExtension : FirProcessSourcesBeforeCompilingExtensi
 
         fun toSourceFile(import: SourceCode): KtVirtualFileSourceFile? =
             if (import is FileBasedScriptSource)
-                findVirtualFile(import.file)?.let { virtualFile -> KtVirtualFileSourceFile(virtualFile) } ?: run {
+                findVirtualFile(import.file.absoluteFile)?.let { virtualFile -> KtVirtualFileSourceFile(virtualFile) } ?: run {
                     configuration.report(
                         CompilerMessageSeverity.ERROR,
                         "Unable to find imported script ${import.file}"

@@ -58,7 +58,7 @@ fun List<KotlinSourceRoot>.forAllFiles(
     allSourceFilesSequence(
         configuration,
         reportLocation,
-        findVirtualFile = { localFileSystem.findFileByPath(it.normalize().absolutePath) },
+        findVirtualFile = { localFileSystem.findFileByPath(it.normalize().path) },
         accept = { virtualFile, isExplicit ->
             if (virtualFile.extension != KotlinFileType.EXTENSION)
                 ensurePluginsConfigured()
@@ -87,7 +87,7 @@ fun <VirtualFile, Source> List<KotlinSourceRoot>.allSourceFilesSequence(
 
     for ((sourceRootPath, isCommon, hmppModuleName) in this@allSourceFilesSequence) {
         val sourceRoot = File(sourceRootPath)
-        val vFile = findVirtualFile(sourceRoot.normalize())
+        val vFile = findVirtualFile(sourceRoot)
         if (vFile == null) {
             val message = "Source file or directory not found: $sourceRootPath"
 
@@ -106,7 +106,7 @@ fun <VirtualFile, Source> List<KotlinSourceRoot>.allSourceFilesSequence(
         for (file in sourceRoot.walkTopDown()) {
             if (!file.isFile) continue
 
-            val virtualFile = findVirtualFile(file.absoluteFile.normalize())
+            val virtualFile = findVirtualFile(file.absoluteFile)
             if (virtualFile != null && processedFiles.add(virtualFile)) {
                 if (accept(virtualFile, false))
                     yield(SourceFileWithModule(convertToSourceFiles(virtualFile), isCommon, hmppModuleName))

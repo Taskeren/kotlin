@@ -72,7 +72,7 @@ fun collectSources(
     }
 
     fun findVirtualFile(file: File): VirtualFile? =
-        projectEnvironment.knownFileSystems.findFileByPath(file.normalize().absolutePath, StandardFileSystems.FILE_PROTOCOL)
+        projectEnvironment.knownFileSystems.findFileByPath(file.normalize().path, StandardFileSystems.FILE_PROTOCOL)
 
     getSourceRootsCheckingForDuplicates(compilerConfiguration, messageCollector)
         .allSourceFilesSequence(
