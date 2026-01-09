@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -37,13 +37,16 @@ class FirJavaValueParameter @FirImplementationDetail constructor(
     override val origin: FirDeclarationOrigin.Java,
     override val attributes: FirDeclarationAttributes,
     override var returnTypeRef: FirTypeRef,
-    override val name: Name,
+    val lazyName: Lazy<Name>,
     override val symbol: FirValueParameterSymbol,
     val annotationList: FirJavaAnnotationList,
     var lazyDefaultValue: Lazy<FirExpression>?,
     override val containingDeclarationSymbol: FirFunctionSymbol<*>,
     override val isVararg: Boolean,
 ) : FirValueParameter() {
+    override val name: Name
+        get() = lazyName.value
+
     override var defaultValue: FirExpression?
         get() = lazyDefaultValue?.value
         set(value) {
@@ -225,12 +228,18 @@ class FirJavaValueParameterBuilder {
     lateinit var moduleData: FirModuleData
     var attributes: FirDeclarationAttributes = FirDeclarationAttributes()
     lateinit var returnTypeRef: FirTypeRef
-    lateinit var name: Name
+    lateinit var lazyName: Lazy<Name>
     var annotationList: FirJavaAnnotationList = FirEmptyJavaAnnotationList
     var defaultValue: Lazy<FirExpression>? = null
     lateinit var containingDeclarationSymbol: FirFunctionSymbol<*>
     var isVararg: Boolean by Delegates.notNull()
     var isFromSource: Boolean by Delegates.notNull()
+
+    var name: Name
+        get() = lazyName.value
+        set(value) {
+            lazyName = lazyOf(value)
+        }
 
     @OptIn(FirImplementationDetail::class)
     fun build(): FirJavaValueParameter {
@@ -240,7 +249,7 @@ class FirJavaValueParameterBuilder {
             origin = javaOrigin(isFromSource),
             attributes,
             returnTypeRef,
-            name,
+            lazyName,
             symbol = FirValueParameterSymbol(),
             annotationList,
             defaultValue,
@@ -265,7 +274,7 @@ inline fun buildJavaValueParameterCopy(original: FirJavaValueParameter, init: Fi
     copyBuilder.attributes = original.attributes.copy()
     copyBuilder.isFromSource = original.origin.fromSource
     copyBuilder.returnTypeRef = original.returnTypeRef
-    copyBuilder.name = original.name
+    copyBuilder.lazyName = original.lazyName
     copyBuilder.annotationList = original.annotationList
     copyBuilder.defaultValue = original.lazyDefaultValue
     copyBuilder.containingDeclarationSymbol = original.containingDeclarationSymbol
