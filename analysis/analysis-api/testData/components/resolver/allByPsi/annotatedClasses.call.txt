@@ -974,13 +974,13 @@ KtSuperTypeCallEntry(480,618): '@Anno("super type call $prop") AbstractClass<@An
       extensionReceiver = null
       signature = KaFunctionSignature:
         receiverType = null
-        returnType = AbstractClass<@R|Anno|(position = <strcat>(String(nested super type ref ), R|.prop|))  kotlin.collections.List<@R|Anno|(position = <strcat>(String(nested nested super type ref ), R|.prop|))  kotlin.Int>>
+        returnType = AbstractClass<@R|Anno|(position = String(nested super type ref str))  kotlin.collections.List<@R|Anno|(position = String(nested nested super type ref str))  kotlin.Int>>
         symbol = <constructor>(): AbstractClass<T>
         valueParameters = []
         contextParameters = []
         callableId = null
     typeArgumentsMapping = {
-      T -> (@R|Anno|(position = <strcat>(String(nested super type ref ), R|.prop|))  kotlin.collections.List<@R|Anno|(position = <strcat>(String(nested nested super type ref ), R|.prop|))  kotlin.Int>)
+      T -> (@R|Anno|(position = String(nested super type ref str))  kotlin.collections.List<@R|Anno|(position = String(nested nested super type ref str))  kotlin.Int>)
     }
 
 KtConstructorCalleeExpression(480,616): '@Anno("super type call $prop") AbstractClass<@Anno("nested super type ref $prop") List<@Anno("nested nested super type ref $prop") Int>>'
@@ -994,13 +994,13 @@ KtConstructorCalleeExpression(480,616): '@Anno("super type call $prop") Abstract
         extensionReceiver = null
         signature = KaFunctionSignature:
           receiverType = null
-          returnType = AbstractClass<@R|Anno|(position = <strcat>(String(nested super type ref ), R|.prop|))  kotlin.collections.List<@R|Anno|(position = <strcat>(String(nested nested super type ref ), R|.prop|))  kotlin.Int>>
+          returnType = AbstractClass<@R|Anno|(position = String(nested super type ref str))  kotlin.collections.List<@R|Anno|(position = String(nested nested super type ref str))  kotlin.Int>>
           symbol = <constructor>(): AbstractClass<T>
           valueParameters = []
           contextParameters = []
           callableId = null
       typeArgumentsMapping = {
-        T -> (@R|Anno|(position = <strcat>(String(nested super type ref ), R|.prop|))  kotlin.collections.List<@R|Anno|(position = <strcat>(String(nested nested super type ref ), R|.prop|))  kotlin.Int>)
+        T -> (@R|Anno|(position = String(nested super type ref str))  kotlin.collections.List<@R|Anno|(position = String(nested nested super type ref str))  kotlin.Int>)
       }
 
 KtTypeReference(480,616): '@Anno("super type call $prop") AbstractClass<@Anno("nested super type ref $prop") List<@Anno("nested nested super type ref $prop") Int>>'
@@ -1397,13 +1397,13 @@ KtSuperTypeCallEntry(653,791): '@Anno("super type call $prop") AbstractClass<@An
       extensionReceiver = null
       signature = KaFunctionSignature:
         receiverType = null
-        returnType = AbstractClass<@R|Anno|(position = <strcat>(String(nested super type ref ), R|.prop|))  kotlin.collections.List<@R|Anno|(position = <strcat>(String(nested nested super type ref ), R|.prop|))  kotlin.Int>>
+        returnType = AbstractClass<@R|Anno|(position = String(nested super type ref str))  kotlin.collections.List<@R|Anno|(position = String(nested nested super type ref str))  kotlin.Int>>
         symbol = <constructor>(): AbstractClass<T>
         valueParameters = []
         contextParameters = []
         callableId = null
     typeArgumentsMapping = {
-      T -> (@R|Anno|(position = <strcat>(String(nested super type ref ), R|.prop|))  kotlin.collections.List<@R|Anno|(position = <strcat>(String(nested nested super type ref ), R|.prop|))  kotlin.Int>)
+      T -> (@R|Anno|(position = String(nested super type ref str))  kotlin.collections.List<@R|Anno|(position = String(nested nested super type ref str))  kotlin.Int>)
     }
 
 KtConstructorCalleeExpression(653,789): '@Anno("super type call $prop") AbstractClass<@Anno("nested super type ref $prop") List<@Anno("nested nested super type ref $prop") Int>>'
@@ -1417,13 +1417,13 @@ KtConstructorCalleeExpression(653,789): '@Anno("super type call $prop") Abstract
         extensionReceiver = null
         signature = KaFunctionSignature:
           receiverType = null
-          returnType = AbstractClass<@R|Anno|(position = <strcat>(String(nested super type ref ), R|.prop|))  kotlin.collections.List<@R|Anno|(position = <strcat>(String(nested nested super type ref ), R|.prop|))  kotlin.Int>>
+          returnType = AbstractClass<@R|Anno|(position = String(nested super type ref str))  kotlin.collections.List<@R|Anno|(position = String(nested nested super type ref str))  kotlin.Int>>
           symbol = <constructor>(): AbstractClass<T>
           valueParameters = []
           contextParameters = []
           callableId = null
       typeArgumentsMapping = {
-        T -> (@R|Anno|(position = <strcat>(String(nested super type ref ), R|.prop|))  kotlin.collections.List<@R|Anno|(position = <strcat>(String(nested nested super type ref ), R|.prop|))  kotlin.Int>)
+        T -> (@R|Anno|(position = String(nested super type ref str))  kotlin.collections.List<@R|Anno|(position = String(nested nested super type ref str))  kotlin.Int>)
       }
 
 KtTypeReference(653,789): '@Anno("super type call $prop") AbstractClass<@Anno("nested super type ref $prop") List<@Anno("nested nested super type ref $prop") Int>>'
