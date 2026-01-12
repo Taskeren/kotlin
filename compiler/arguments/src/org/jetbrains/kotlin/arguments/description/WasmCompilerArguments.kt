@@ -121,8 +121,6 @@ val actualWasmArguments by compilerArgumentsLevel(CompilerArgumentsLevelNames.wa
         )
     }
 
-    // default: "~"
-    // TODO is this right
     compilerArgument {
         name = "Xwasm-internal-local-variable-prefix"
         description = "Prefix to use for internally generated local variables.".asReleaseDependent()
@@ -132,8 +130,7 @@ val actualWasmArguments by compilerArgumentsLevel(CompilerArgumentsLevelNames.wa
         )
 
         lifecycle(
-            // TODO fix
-            introducedVersion = KotlinReleaseVersion.v2_2_20
+            introducedVersion = KotlinReleaseVersion.v2_3_20
         )
     }
 

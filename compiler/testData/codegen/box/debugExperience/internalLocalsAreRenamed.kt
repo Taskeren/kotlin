@@ -48,8 +48,7 @@ fun lambdas() : Int {
 fun box(): String {
     if(dontRenameNormal() != 42
         || inductionVar() != 42
-        || lambdas() != 42
-        )
+        || lambdas() != 42)
         return "NOT OK"
 
     return "OK"
