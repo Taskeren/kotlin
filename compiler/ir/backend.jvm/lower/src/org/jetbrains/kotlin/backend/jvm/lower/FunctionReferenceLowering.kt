@@ -151,7 +151,7 @@ internal class FunctionReferenceLowering(private val context: JvmBackendContext)
         )
     }
 
-    // Handle SAM conversions which wrap not a function reference or lambda
+    // Handle SAM conversions which wrap neither a function reference nor a lambda.
     // The case of function reference or lambda was already covered by [UpgradeCallableReferenceLowering]
     override fun visitTypeOperator(expression: IrTypeOperatorCall): IrExpression {
         expression.transformChildrenVoid()
