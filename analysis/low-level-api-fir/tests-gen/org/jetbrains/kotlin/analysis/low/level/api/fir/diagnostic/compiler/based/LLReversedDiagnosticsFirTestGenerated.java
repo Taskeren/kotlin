@@ -3385,6 +3385,18 @@ public class LLReversedDiagnosticsFirTestGenerated extends AbstractLLReversedDia
         }
 
         @Test
+        @TestMetadata("contracts.kt")
+        public void testContracts() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextParameters/explicit/contracts.kt");
+        }
+
+        @Test
+        @TestMetadata("differentNamesInActual.kt")
+        public void testDifferentNamesInActual() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextParameters/explicit/differentNamesInActual.kt");
+        }
+
+        @Test
         @TestMetadata("differentNamesInOverride.kt")
         public void testDifferentNamesInOverride() {
           runTest("compiler/fir/analysis-tests/testData/resolve/contextParameters/explicit/differentNamesInOverride.kt");
@@ -3394,6 +3406,12 @@ public class LLReversedDiagnosticsFirTestGenerated extends AbstractLLReversedDia
         @TestMetadata("disabled.kt")
         public void testDisabled() {
           runTest("compiler/fir/analysis-tests/testData/resolve/contextParameters/explicit/disabled.kt");
+        }
+
+        @Test
+        @TestMetadata("genericOverloads.kt")
+        public void testGenericOverloads() {
+          runTest("compiler/fir/analysis-tests/testData/resolve/contextParameters/explicit/genericOverloads.kt");
         }
 
         @Test

@@ -26,6 +26,8 @@ class C : I {
 fun test(c: C) {
     c.<!NO_CONTEXT_ARGUMENT!>simple1<!>(<!NAMED_PARAMETER_NOT_FOUND!>s<!> = "")
     c.simple1(string = "")
+    (c as I).simple1(s = "")
+    (c as I).<!NO_CONTEXT_ARGUMENT!>simple1<!>(<!NAMED_PARAMETER_NOT_FOUND!>string<!> = "")
 
     c.<!NO_CONTEXT_ARGUMENT!>unnamedInOverride<!>(<!NAMED_PARAMETER_NOT_FOUND!>s<!> = "")
 
