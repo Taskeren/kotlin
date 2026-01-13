@@ -32,7 +32,6 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.KVisibility
 
 abstract class IrSymbolValidationHandler(testServices: TestServices) : AbstractIrHandler(testServices) {
-    protected open val blackList: List<String> = emptyList()
     private val preSerializationAnnotation = FqName.fromSegments(listOf("kotlin", "internal", "UsedFromCompilerGeneratedCode"))
 
     protected abstract fun getSymbols(irBuiltIns: IrBuiltIns): List<PreSerializationSymbols>
@@ -49,7 +48,6 @@ abstract class IrSymbolValidationHandler(testServices: TestServices) : AbstractI
         val klass = symbolsContainer::class
         klass.members.forEach {
             if (it !is KProperty<*> || (it.visibility != KVisibility.PUBLIC && it.visibility != KVisibility.INTERNAL)) return@forEach
-            if (it.name in blackList) return@forEach
             it.getter.call(symbolsContainer).also { result ->
                 validateRecursive(result, klass)
             }
