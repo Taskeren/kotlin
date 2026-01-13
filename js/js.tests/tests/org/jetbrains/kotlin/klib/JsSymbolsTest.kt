@@ -19,13 +19,13 @@ import org.jetbrains.kotlin.test.TargetBackend
 import org.jetbrains.kotlin.test.backend.ir.IrPreSerializationJsSymbolValidationHandler
 import org.jetbrains.kotlin.test.backend.ir.IrSecondPhaseSymbolValidationHandler
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
-import org.jetbrains.kotlin.test.klib.AbstractSymbolsValidationTextTest
+import org.jetbrains.kotlin.test.klib.AbstractSymbolsValidationTest
 import org.jetbrains.kotlin.test.services.TestServices
 import org.jetbrains.kotlin.test.services.configuration.JsFirstStageEnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.configuration.JsSecondStageEnvironmentConfigurator
 
 @Suppress("JUnitTestCaseWithNoTests")
-class JsSymbolsTest : AbstractSymbolsValidationTextTest(
+class JsSymbolsTest : AbstractSymbolsValidationTest(
     TargetBackend.JS_IR,
     JsPlatforms.defaultJsPlatform,
     ::FirCliWebFacade,

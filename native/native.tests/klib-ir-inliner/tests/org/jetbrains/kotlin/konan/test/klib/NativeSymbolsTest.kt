@@ -14,11 +14,11 @@ import org.jetbrains.kotlin.test.TargetBackend
 import org.jetbrains.kotlin.test.backend.ir.IrPreSerializationNativeSymbolValidationHandler
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.frontend.fir.FirFrontendFacade
-import org.jetbrains.kotlin.test.klib.AbstractSymbolsValidationTextTest
+import org.jetbrains.kotlin.test.klib.AbstractSymbolsValidationTest
 import org.jetbrains.kotlin.test.services.configuration.NativeEnvironmentConfigurator
 
 @Suppress("JUnitTestCaseWithNoTests")
-class NativeSymbolsTest : AbstractSymbolsValidationTextTest(
+class NativeSymbolsTest : AbstractSymbolsValidationTest(
     TargetBackend.NATIVE,
     NativePlatforms.unspecifiedNativePlatform,
     ::FirFrontendFacade,
