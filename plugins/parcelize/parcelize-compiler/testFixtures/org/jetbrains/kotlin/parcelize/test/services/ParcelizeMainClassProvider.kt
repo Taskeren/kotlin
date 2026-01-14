@@ -20,6 +20,7 @@ class ParcelizeMainClassProvider(testServices: TestServices) : JvmBoxMainClassPr
             .map { "-D$it=${System.getProperty(it)}" }
             .toList()
             .toTypedArray()
+        println("""ROBOLECTRIC DEBUG: $robolectricProperties""")
 
         return listOfNotNull(
             *robolectricProperties,

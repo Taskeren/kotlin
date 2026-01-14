@@ -104,6 +104,7 @@ class ParcelizeRuntimeClasspathProvider(testServices: TestServices) : RuntimeCla
         if (ENABLE_PARCELIZE !in module.directives) return emptyList()
         val kotlinRuntimeJar = PathUtil.kotlinPathsForIdeaPlugin.stdlibPath
 
+        println("""System.getProperty("robolectric.classpath") = ${System.getProperty("robolectric.classpath")}""")
         val robolectricClasspath = System.getProperty("robolectric.classpath")
             ?: throw RuntimeException("Unable to get a valid classpath from 'robolectric.classpath' property, please set it accordingly")
         val robolectricJars = robolectricClasspath.split(File.pathSeparator)
