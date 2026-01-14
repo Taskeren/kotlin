@@ -29,6 +29,7 @@ import org.jetbrains.kotlin.fir.session.environment.AbstractProjectFileSearchSco
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.scripting.compiler.plugin.ScriptingK2CompilerPluginRegistrar
 import org.jetbrains.kotlin.scripting.compiler.plugin.definitions.*
+import org.jetbrains.kotlin.scripting.compiler.plugin.dependencies.toSystemIndependentScriptPath
 import org.jetbrains.kotlin.scripting.compiler.plugin.impl.ScriptingModuleDataProvider
 import org.jetbrains.kotlin.scripting.compiler.plugin.impl.collectAndResolveScriptAnnotationsViaFir
 import org.jetbrains.kotlin.scripting.compiler.plugin.impl.convertToFirViaLightTree
@@ -115,13 +116,13 @@ class FirProcessScriptSourcesExtension : FirProcessSourcesBeforeCompilingExtensi
             .filterTo(mutableMapOf()) { definitionProvider.isScript(it.key) }
 
         val remainingSources = ArrayList<SourceCode>().also { it.addAll(sourcesToFiles.keys) }
-        val knownSources = sourcesToFiles.keys.mapTo(mutableSetOf()) { it.locationId }
+        val knownSources = sourcesToFiles.keys.mapTo(mutableSetOf()) { it.locationId?.toSystemIndependentScriptPath() }
         val sourceDependencies = mutableMapOf<SourceCode, List<SourceCode>>()
 
         while (remainingSources.isNotEmpty()) {
             val sourceCode = remainingSources.pop()
             sourceCode.collectImports()?.let { imports ->
-                imports.filter { knownSources.add(it.locationId) }.forEach { newImport ->
+                imports.filter { knownSources.add(it.locationId?.toSystemIndependentScriptPath()) }.forEach { newImport ->
                     remainingSources.add(newImport)
                     toSourceFile(newImport)?.let {
                         sourcesToFiles[newImport] = it

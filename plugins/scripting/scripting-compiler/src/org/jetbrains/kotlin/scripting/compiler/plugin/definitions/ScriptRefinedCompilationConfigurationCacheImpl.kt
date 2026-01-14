@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.scripting.compiler.plugin.definitions
 
+import org.jetbrains.kotlin.scripting.compiler.plugin.dependencies.toSystemIndependentScriptPath
 import org.jetbrains.kotlin.scripting.definitions.ScriptConfigurationsProvider
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptCompilationConfiguration
@@ -19,19 +20,19 @@ class ScriptRefinedCompilationConfigurationCacheImpl : ScriptRefinedCompilationC
     private val refinedCache = mutableMapOf<String, ResultWithDiagnostics<ScriptCompilationConfiguration>>()
 
     override fun getRefinedCompilationConfiguration(sourceCode: SourceCode): ResultWithDiagnostics<ScriptCompilationConfiguration>? =
-        sourceCode.locationId?.let { refinedCache[it] }
+        sourceCode.locationId?.let { refinedCache[it.toSystemIndependentScriptPath()] }
 
     override fun storeRefinedCompilationConfiguration(
         sourceCode: SourceCode,
         configuration: ResultWithDiagnostics<ScriptCompilationConfiguration>
     ): ResultWithDiagnostics<ScriptCompilationConfiguration>? {
         val locationId = sourceCode.locationId ?: error("Cannot cache script without location: ${sourceCode.name ?: sourceCode.text}")
-        return refinedCache.put(locationId, configuration)
+        return refinedCache.put(locationId.toSystemIndependentScriptPath(), configuration)
     }
 
     override fun clearRefinedCompilationConfiguration(sourceCode: SourceCode): ResultWithDiagnostics<ScriptCompilationConfiguration>? {
         val locationId = sourceCode.locationId ?: return null
-        return refinedCache.remove(locationId)
+        return refinedCache.remove(locationId.toSystemIndependentScriptPath())
     }
 }
 
