@@ -111,6 +111,8 @@ class ParcelizeRuntimeClasspathProvider(testServices: TestServices) : RuntimeCla
             .map { File(it) }
             .sortedBy { it.nameWithoutExtension }
 
+        println("robolectricJars = $robolectricJars")
+
         val junitCoreResourceName = JUnitCore::class.java.name.replace('.', '/') + ".class"
         val junitJar = File(
             JUnitCore::class.java.classLoader.getResource(junitCoreResourceName)!!.file
