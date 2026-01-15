@@ -44,33 +44,33 @@ internal object KotlinNativeBundleArtifactFormat {
      *
      * @param project The project in which to set up the transformations.
      */
-    internal fun setupTransform(project: Project) {
-        val tarGz = project.dependencies.artifactTypes.maybeCreate("tar.gz").also { artifactType ->
-            artifactType.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.ARCHIVE)
-        }
-
-        project.dependencies.registerTransformForArtifactType(
-            UnzipTransformationAction::class.java,
-            fromArtifactType = tarGz.name,
-            toArtifactType = ArtifactTypeDefinition.DIRECTORY_TYPE,
-        ) { transform ->
-            transform.from.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.ARCHIVE)
-            transform.to.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.DIRECTORY)
-        }
-
-        val zip = project.dependencies.artifactTypes.maybeCreate("zip").also { artifactType ->
-            artifactType.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.ARCHIVE)
-        }
-
-        project.dependencies.registerTransformForArtifactType(
-            UnzipTransformationAction::class.java,
-            fromArtifactType = zip.name,
-            toArtifactType = ArtifactTypeDefinition.DIRECTORY_TYPE,
-        ) { transform ->
-            transform.from.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.ARCHIVE)
-            transform.to.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.DIRECTORY)
-        }
-    }
+//    internal fun setupTransform(project: Project) {
+//        val tarGz = project.dependencies.artifactTypes.maybeCreate("tar.gz").also { artifactType ->
+//            artifactType.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.ARCHIVE)
+//        }
+//
+//        project.dependencies.registerTransformForArtifactType(
+//            UnzipTransformationAction::class.java,
+//            fromArtifactType = tarGz.name,
+//            toArtifactType = ArtifactTypeDefinition.DIRECTORY_TYPE,
+//        ) { transform ->
+//            transform.from.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.ARCHIVE)
+//            transform.to.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.DIRECTORY)
+//        }
+//
+//        val zip = project.dependencies.artifactTypes.maybeCreate("zip").also { artifactType ->
+//            artifactType.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.ARCHIVE)
+//        }
+//
+//        project.dependencies.registerTransformForArtifactType(
+//            UnzipTransformationAction::class.java,
+//            fromArtifactType = zip.name,
+//            toArtifactType = ArtifactTypeDefinition.DIRECTORY_TYPE,
+//        ) { transform ->
+//            transform.from.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.ARCHIVE)
+//            transform.to.attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.DIRECTORY)
+//        }
+//    }
 
     internal fun addKotlinNativeBundleConfiguration(project: Project) {
         project.configurations
@@ -78,9 +78,9 @@ internal object KotlinNativeBundleArtifactFormat {
                 defaultDependencies {
                     it.add(project.dependencies.create(NativeCompilerDownloader.getCompilerDependencyNotation(project)))
                 }
-                if (!attributes.contains(attribute)) {
-                    attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.DIRECTORY)
-                }
+//                if (!attributes.contains(attribute)) {
+//                    attributes.attribute(attribute, KotlinNativeBundleArtifactsTypes.DIRECTORY)
+//                }
             }
     }
 }

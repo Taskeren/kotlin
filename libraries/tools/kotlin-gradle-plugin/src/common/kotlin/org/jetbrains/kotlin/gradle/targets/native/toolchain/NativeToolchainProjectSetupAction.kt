@@ -24,6 +24,6 @@ internal val NativeToolchainProjectSetupAction = KotlinProjectSetupCoroutine {
     ) {
         addKotlinNativeBundleConfiguration(project)
         KotlinNativeBundleArtifactFormat.setupAttributesMatchingStrategy(project.dependencies.attributesSchema)
-        KotlinNativeBundleArtifactFormat.setupTransform(project)
+//        KotlinNativeBundleArtifactFormat.setupTransform(project)
     }
 }
