@@ -38,11 +38,6 @@ import org.jetbrains.kotlin.plugin.sandbox.fir.fqn
 import org.jetbrains.kotlin.types.ConstantValueKind
 import org.jetbrains.kotlin.utils.addToStdlib.shouldNotBeCalled
 
-/*
- * For each class annotated with @NestedClassAndMaterializeMember generates
- *  - member fun materialize(): ClassName
- *  - nested class Nested with default constructor
- */
 class MemberFunctionWithAnnotatedParametersGenerator(session: FirSession) : FirDeclarationGenerationExtension(session) {
     companion object {
         val FOO_NAME = Name.identifier("foo")
