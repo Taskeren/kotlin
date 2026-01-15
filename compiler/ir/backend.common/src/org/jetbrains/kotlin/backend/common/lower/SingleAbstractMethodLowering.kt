@@ -230,8 +230,8 @@ abstract class SingleAbstractMethodLowering(val context: CommonBackendContext) :
             overriddenSymbols = listOf(originalSuperMethod.symbol)
             val overriddenMethodsOfAny = originalSuperMethod.allOverridden().filter { it.parentAsClass == anyClass }
             if (overriddenMethodsOfAny.isNotEmpty()) {
-                overriddenSymbols += overriddenMethodsOfAny.map { method ->
-                    superClass.functions.first { it.overrides(method) }.symbol
+                overriddenSymbols += overriddenMethodsOfAny.mapNotNull { method ->
+                    superClass.functions.firstOrNull { it.overrides(method) }?.symbol
                 }
             }
             parameters = (listOf(subclass.thisReceiver!!) + originalSuperMethod.nonDispatchParameters)
