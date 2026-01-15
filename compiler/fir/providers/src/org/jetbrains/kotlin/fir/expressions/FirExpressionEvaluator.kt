@@ -88,7 +88,7 @@ object FirExpressionEvaluator {
         return evaluateVariableValue(
             parameter,
             session,
-            { canBeUsedForAnnotationParameter(session) },
+            { true },
             { defaultValue }
         )
     }
