@@ -179,7 +179,7 @@ fun main() {
      * Interesting test case: variable can be fixed to different types randomly (`Int` or `Number`; it depends on variable fixation order)
      * if in `TypeVariableDependencyInformationProvider` `hashSet` instead of `linkedSet` for `deepTypeVariableDependencies` and `shallowTypeVariableDependencies` will be used
      */
-    takeLambdasWithInverselyDependentTypeParameters({ <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Number")!>it<!> }, { x: Number -> x }, { x: Int -> x })
+    takeLambdasWithInverselyDependentTypeParameters({ <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>it<!> }, { x: Number -> x }, { x: Int -> x })
 
     // Inferring lambda parameter types by subtypes of functional type
     <!DEBUG_INFO_EXPRESSION_TYPE("(kotlin.Int, kotlin.String, kotlin.Float) -> kotlin.Float")!>select(A2(), { a, b, c -> <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>a<!>; <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>b<!>; <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Float")!>c<!> })<!>

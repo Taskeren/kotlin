@@ -30,6 +30,7 @@ R|<local>/x|.toArray#(R|<local>/y|)
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 2
@@ -82,6 +83,7 @@ Q|J|.asList#(R|<local>/x|.R?C|java/util/ArrayList.toArray|(R|<local>/y|))
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
     1. `TypeVariable(T)` is `Readiness(
        	 true ALLOWED
@@ -95,6 +97,7 @@ Q|J|.asList#(R|<local>/x|.R?C|java/util/ArrayList.toArray|(R|<local>/y|))
        	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
        	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
        	 true HAS_PROPER_NON_ILT_CONSTRAINT
+       	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
        )`
 2. `TypeVariable(F) == kotlin/String!` _from Fix variable F_
 3. Combine `ft<TypeVariable(T) & Any, TypeVariable(T)?> <: TypeVariable(F)` with `TypeVariable(F) == kotlin/String!`
@@ -113,5 +116,6 @@ Q|J|.asList#(R|<local>/x|.R?C|java/util/ArrayList.toArray|(R|<local>/y|))
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 6. `TypeVariable(T) == kotlin/String?` _from Fix variable T_

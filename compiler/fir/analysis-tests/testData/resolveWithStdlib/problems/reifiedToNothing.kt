@@ -14,7 +14,7 @@ fun parse(token: String, flag: Boolean): Result? {
     return ifTrue(flag) {
         try {
             // P shouldn't be inferred to Nothing
-            <!REIFIED_TYPE_FORBIDDEN_SUBSTITUTION!>parse<!>(decode(token))
+            parse(decode(token))
         } catch (e: Exception) {
             null
         }

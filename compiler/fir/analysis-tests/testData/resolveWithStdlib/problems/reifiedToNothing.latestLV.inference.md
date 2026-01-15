@@ -83,6 +83,7 @@ parse#(R|/decode|(R|<local>/token|))
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 5
@@ -121,6 +122,7 @@ catch (e: R|{kotlin/Exception=} java/lang/Exception|) {
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
     1. `TypeVariable(P)` is `Readiness(
        	false ALLOWED
@@ -134,6 +136,7 @@ catch (e: R|{kotlin/Exception=} java/lang/Exception|) {
        	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
        	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
        	false HAS_PROPER_NON_ILT_CONSTRAINT
+       	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
        )`
 
 ### Call 2
@@ -169,7 +172,7 @@ ifTrue#(R|<local>/flag|, <L> = ifTrue@fun <implicit>.<anonymous>(): <implicit> <
     1. `TypeVariable(P) <: kotlin/Any?`
 7. Combine `TypeVariable(P) <: TypeVariable(K)` with `TypeVariable(K) <: Result?`
     1. `TypeVariable(P) <: Result?`
-8. Choose `TypeVariable(T)` with `Readiness(
+8. Choose `TypeVariable(P)` with `Readiness(
    	 true ALLOWED
    	 true HAS_PROPER_CONSTRAINTS
    	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
@@ -181,7 +184,55 @@ ifTrue#(R|<local>/flag|, <L> = ifTrue@fun <implicit>.<anonymous>(): <implicit> <
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
+    1. `TypeVariable(T)` is `Readiness(
+       	 true ALLOWED
+       	 true HAS_PROPER_CONSTRAINTS
+       	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
+       	false HAS_CAPTURED_UPPER_BOUND_WITH_SELF_TYPES
+       	 true HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
+       	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
+       	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
+       	 true HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE
+       	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
+       	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
+       	 true HAS_PROPER_NON_ILT_CONSTRAINT
+       	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
+       )`
+    2. `TypeVariable(K)` is `Readiness(
+       	 true ALLOWED
+       	 true HAS_PROPER_CONSTRAINTS
+       	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
+       	false HAS_CAPTURED_UPPER_BOUND_WITH_SELF_TYPES
+       	 true HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
+       	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
+       	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
+       	 true HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE
+       	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
+       	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
+       	 true HAS_PROPER_NON_ILT_CONSTRAINT
+       	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
+       )`
+9. `TypeVariable(P) == Result` _from Fix variable P_
+10. Combine `TypeVariable(P) == Result` with `TypeVariable(P) <: TypeVariable(K)`
+    1. `Result <: TypeVariable(K)`
+11. Combine `TypeVariable(P) == Result` with `TypeVariable(P) <: TypeVariable(T)?`
+    1. `Result <: TypeVariable(T)`
+12. Choose `TypeVariable(T)` with `Readiness(
+    	 true ALLOWED
+    	 true HAS_PROPER_CONSTRAINTS
+    	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
+    	false HAS_CAPTURED_UPPER_BOUND_WITH_SELF_TYPES
+    	 true HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
+    	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
+    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
+    	 true HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE
+    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
+    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
+    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+    	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
+    )`
     1. `TypeVariable(K)` is `Readiness(
        	 true ALLOWED
        	 true HAS_PROPER_CONSTRAINTS
@@ -192,30 +243,12 @@ ifTrue#(R|<local>/flag|, <L> = ifTrue@fun <implicit>.<anonymous>(): <implicit> <
        	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
        	 true HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE
        	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
-       	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
+       	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
        	 true HAS_PROPER_NON_ILT_CONSTRAINT
+       	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
        )`
-    2. `TypeVariable(P)` is `Readiness(
-       	 true ALLOWED
-       	 true HAS_PROPER_CONSTRAINTS
-       	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
-       	false HAS_CAPTURED_UPPER_BOUND_WITH_SELF_TYPES
-       	 true HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
-       	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
-       	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
-       	 true HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE
-       	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
-       	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
-       	 true HAS_PROPER_NON_ILT_CONSTRAINT
-       )`
-9. `TypeVariable(T) == kotlin/Nothing` _from Fix variable T_
-10. Combine `TypeVariable(K) & Any <: TypeVariable(T)` with `TypeVariable(T) == kotlin/Nothing`
-    1. `TypeVariable(K) <: kotlin/Nothing?`
-11. Combine `TypeVariable(P) & Any <: TypeVariable(T)` with `TypeVariable(T) == kotlin/Nothing`
-    1. `TypeVariable(P) <: kotlin/Nothing?`
-12. Combine `kotlin/Nothing? <: TypeVariable(K)` with `TypeVariable(K) <: kotlin/Nothing?`
-    1. `TypeVariable(K) == kotlin/Nothing?`
-13. Choose `TypeVariable(K)` with `Readiness(
+13. `TypeVariable(T) == Result` _from Fix variable T_
+14. Choose `TypeVariable(K)` with `Readiness(
     	 true ALLOWED
     	 true HAS_PROPER_CONSTRAINTS
     	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
@@ -225,33 +258,8 @@ ifTrue#(R|<local>/flag|, <L> = ifTrue@fun <implicit>.<anonymous>(): <implicit> <
     	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
     	 true HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE
     	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
-    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
+    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
     	 true HAS_PROPER_NON_ILT_CONSTRAINT
+    	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
     )`
-    1. `TypeVariable(P)` is `Readiness(
-       	 true ALLOWED
-       	 true HAS_PROPER_CONSTRAINTS
-       	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
-       	false HAS_CAPTURED_UPPER_BOUND_WITH_SELF_TYPES
-       	 true HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
-       	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
-       	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
-       	 true HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE
-       	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
-       	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
-       	 true HAS_PROPER_NON_ILT_CONSTRAINT
-       )`
-14. Choose `TypeVariable(P)` with `Readiness(
-    	 true ALLOWED
-    	 true HAS_PROPER_CONSTRAINTS
-    	 true HAS_NO_OUTER_TYPE_VARIABLE_DEPENDENCY
-    	false HAS_CAPTURED_UPPER_BOUND_WITH_SELF_TYPES
-    	 true HAS_PROPER_NON_SELF_TYPE_BASED_CONSTRAINT
-    	 true HAS_NO_DEPENDENCIES_TO_OTHER_VARIABLES
-    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS
-    	 true HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE
-    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
-    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
-    	 true HAS_PROPER_NON_ILT_CONSTRAINT
-    )`
-15. `TypeVariable(P) == kotlin/Nothing` _from Fix variable P_
+15. `TypeVariable(K) == Result?` _from Fix variable K_

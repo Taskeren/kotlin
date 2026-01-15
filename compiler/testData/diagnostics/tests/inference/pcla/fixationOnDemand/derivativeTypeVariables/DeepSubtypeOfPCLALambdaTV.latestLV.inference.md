@@ -35,6 +35,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. Choose `TypeVariable(OT)` with `Readiness(
    	 true ALLOWED
@@ -48,6 +49,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 2
@@ -91,6 +93,7 @@ R?C|<local>/otvOwner|.createDerivativeTypeVariable#(R?C|<local>/otvOwner|.R?C|/T
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 3
@@ -163,6 +166,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
     1. `TypeVariable(PNT)` is `Readiness(
        	 true ALLOWED
@@ -176,6 +180,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
        	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
        	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
        	 true HAS_PROPER_NON_ILT_CONSTRAINT
+       	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
        )`
 3. `TypeVariable(OT) == ScopeOwner` _from Fix variable OT_
 4. Combine `TypeVariable(PNT) <: TypeVariable(OT)` with `TypeVariable(OT) == ScopeOwner`
@@ -192,6 +197,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 6. `TypeVariable(PNT) == ScopeOwner` _from Fix variable PNT_
 
@@ -231,6 +237,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. Choose `TypeVariable(OT)` with `Readiness(
    	 true ALLOWED
@@ -244,6 +251,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 7
@@ -287,6 +295,7 @@ R?C|<local>/otvOwner|.createDerivativeTypeVariable#(R?C|<local>/otvOwner|.R?C|/T
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 8
@@ -353,6 +362,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
     1. `TypeVariable(PNT)` is `Readiness(
        	 true ALLOWED
@@ -366,6 +376,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
        	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
        	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
        	 true HAS_PROPER_NON_ILT_CONSTRAINT
+       	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
        )`
 3. `TypeVariable(OT) == BaseType` _from Fix variable OT_
 4. Combine `TypeVariable(PNT) <: TypeVariable(OT)` with `TypeVariable(OT) == BaseType`
@@ -382,6 +393,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 6. `TypeVariable(PNT) == Interloper` _from Fix variable PNT_
 
@@ -420,6 +432,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. Choose `TypeVariable(OT)` with `Readiness(
    	 true ALLOWED
@@ -433,6 +446,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 12
@@ -476,6 +490,7 @@ R?C|<local>/otvOwner|.createDerivativeTypeVariable#(R?C|<local>/otvOwner|.R?C|/T
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 13
@@ -550,6 +565,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
     1. `TypeVariable(PNT)` is `Readiness(
        	 true ALLOWED
@@ -563,6 +579,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
        	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
        	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
        	 true HAS_PROPER_NON_ILT_CONSTRAINT
+       	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
        )`
 3. `TypeVariable(OT) == ScopeOwner` _from Fix variable OT_
 4. Combine `TypeVariable(PNT) <: TypeVariable(OT)` with `TypeVariable(OT) == ScopeOwner`
@@ -581,6 +598,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 7. `TypeVariable(PNT) == ScopeOwner` _from Fix variable PNT_
 
@@ -620,6 +638,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. Choose `TypeVariable(OT)` with `Readiness(
    	 true ALLOWED
@@ -633,6 +652,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 17
@@ -676,6 +696,7 @@ R?C|<local>/otvOwner|.createDerivativeTypeVariable#(R?C|<local>/otvOwner|.R?C|/T
    	false HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	false HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 
 ### Call 18
@@ -762,6 +783,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
     1. `TypeVariable(PNT)` is `Readiness(
        	 true ALLOWED
@@ -775,6 +797,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
        	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
        	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
        	 true HAS_PROPER_NON_ILT_CONSTRAINT
+       	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
        )`
 3. `TypeVariable(OT) == BaseType` _from Fix variable OT_
 4. Combine `TypeVariable(PNT) <: TypeVariable(OT)` with `TypeVariable(OT) == BaseType`
@@ -803,6 +826,7 @@ pcla#(<L> = pcla@fun <implicit>.<anonymous>(otvOwner: <implicit>): <implicit> <i
     	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
     	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
     	 true HAS_PROPER_NON_ILT_CONSTRAINT
+    	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
     )`
 
 ### Call 22
@@ -840,6 +864,7 @@ Null(null)!!
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. `TypeVariable(K) == kotlin/Nothing` _from Fix variable K_
 
@@ -873,6 +898,7 @@ ContravariantContainer#()
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. `TypeVariable(CT) == T` _from Fix variable CT_
 
@@ -909,6 +935,7 @@ TypeVariableOwner#()
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. `TypeVariable(T) == PNT` _from Fix variable T_
 
@@ -942,6 +969,7 @@ InvariantContainer#()
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	 true HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. `TypeVariable(CT) == T` _from Fix variable CT_
 
@@ -978,6 +1006,7 @@ TypeVariableOwner#()
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	 true HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. `TypeVariable(T) == PNT` _from Fix variable T_
 
@@ -1016,6 +1045,7 @@ Null(null)!!
    	 true HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND
    	false HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT
    	 true HAS_PROPER_NON_ILT_CONSTRAINT
+   	false HAS_NO_EXPLICIT_LOWER_NOTHING_CONSTRAINT
    )`
 2. `TypeVariable(K) == kotlin/Nothing` _from Fix variable K_
 
