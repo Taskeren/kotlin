@@ -584,7 +584,6 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
         }
     }
 
-
     private fun TypeResolutionConfiguration.iterateScopesWithSubstitution(
         name: Name,
         processor: (FirClassifierSymbol<*>, ConeSubstitutor, FirScope) -> Unit,
