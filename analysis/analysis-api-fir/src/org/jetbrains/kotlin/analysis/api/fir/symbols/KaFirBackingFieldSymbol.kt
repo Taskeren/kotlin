@@ -20,22 +20,21 @@ import org.jetbrains.kotlin.analysis.api.types.KaType
 import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
 import org.jetbrains.kotlin.fir.symbols.impl.FirBackingFieldSymbol
 import org.jetbrains.kotlin.psi.KtBackingField
-import org.jetbrains.kotlin.psi.KtCallableDeclaration
 
 internal class KaFirBackingFieldSymbol private constructor(
     override val backingPsi: KtBackingField?,
     override val analysisSession: KaFirSession,
     override val lazyFirSymbol: Lazy<FirBackingFieldSymbol>,
-    private val backingOwningProperty: KaKotlinPropertySymbol,
+    private val backingOwningProperty: KaFirKotlinPropertySymbol<*>,
 ) : KaBackingFieldSymbol(), KaFirKtBasedSymbol<KtBackingField, FirBackingFieldSymbol> {
-    constructor(declaration: KtBackingField, session: KaFirSession, owningProperty: KaKotlinPropertySymbol) : this(
+    constructor(declaration: KtBackingField, session: KaFirSession, owningProperty: KaFirKotlinPropertySymbol<*>) : this(
         backingPsi = declaration,
         lazyFirSymbol = lazyFirSymbol(declaration, session),
         analysisSession = session,
         backingOwningProperty = owningProperty,
     )
 
-    constructor(symbol: FirBackingFieldSymbol, session: KaFirSession, owningProperty: KaKotlinPropertySymbol) : this(
+    constructor(symbol: FirBackingFieldSymbol, session: KaFirSession, owningProperty: KaFirKotlinPropertySymbol<*>) : this(
         backingPsi = symbol.backingPsiIfApplicable as? KtBackingField,
         lazyFirSymbol = lazyOf(symbol),
         analysisSession = session,
@@ -88,11 +87,9 @@ internal class KaFirBackingFieldSymbol private constructor(
  * The compiler preserves annotations on backing fields for properties coming from libraries, so for them the FIR tree needs to be
  * checked directly. However, the FIR tree for compiled declarations is already resolved, so a direct check is virtually free.
  */
-private fun KaKotlinPropertySymbol.mayHaveBackingFieldAnnotation(): Boolean {
-    // A property or a primary constructor parameter.
-    val psi = psi as? KtCallableDeclaration ?: return true
-
-    return psi.annotationEntries.any {
+private fun KaFirKotlinPropertySymbol<*>.mayHaveBackingFieldAnnotation(): Boolean {
+    val annotationEntries = backingPsi?.annotationEntries ?: return false
+    return annotationEntries.any {
         when (it.useSiteTarget?.getAnnotationUseSiteTarget()) {
             null, AnnotationUseSiteTarget.FIELD, AnnotationUseSiteTarget.PROPERTY_DELEGATE_FIELD, AnnotationUseSiteTarget.ALL -> true
             else -> false
