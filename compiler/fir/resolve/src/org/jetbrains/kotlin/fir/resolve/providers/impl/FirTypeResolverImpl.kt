@@ -34,7 +34,7 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
     private val aliasedTypeExpansionGloballyDisabled: Boolean =
         !session.languageVersionSettings.getFlag(AnalysisFlags.expandTypeAliasesInTypeResolution)
 
-    private val useNewResolutionOfCallableReferences: Boolean =
+    private val useProperResolutionOfCallableReferenceLHSs: Boolean =
         session.languageVersionSettings.supportsFeature(LanguageFeature.ProperSupportOfInnerClassesInCallableReferenceLHS)
 
     private fun resolveSymbol(
@@ -415,7 +415,7 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
 
         var diagnostic: ConeDiagnostic? = null
 
-        if (!useNewResolutionOfCallableReferences && qualifier.typeArguments.size != expectedNumberOfExplicitTypeArguments) {
+        if (!useProperResolutionOfCallableReferenceLHSs && qualifier.typeArguments.size != expectedNumberOfExplicitTypeArguments) {
             diagnostic = ConeWrongNumberOfTypeArgumentsError(expectedNumberOfExplicitTypeArguments, classSymbol, qualifier.source!!)
         }
 
@@ -451,7 +451,7 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
                 }
             }
 
-            if (!useNewResolutionOfCallableReferences) {
+            if (!useProperResolutionOfCallableReferenceLHSs) {
                 // If `Outer<Arg>.Nested.Inner`, `Arg` is included in type arguments of qualifier, so we need to add it.
                 while (currentQualifier.explicitParent != null) {
                     currentQualifier = currentQualifier.explicitParent!!
@@ -503,7 +503,7 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
         val allTypeArguments: MutableList<ConeTypeProjection> = mutableListOf()
         var diagnostic = allTypeArguments.matchQualifierPartsAndClassesForLHS(qualifier, classSymbol)
 
-        if (!useNewResolutionOfCallableReferences) {
+        if (!useProperResolutionOfCallableReferenceLHSs) {
             for (outerTypeParamIndex in allTypeArguments.size..<typeParametersSize) {
                 val typeParam = classSymbol.typeParameterSymbols[outerTypeParamIndex]
 

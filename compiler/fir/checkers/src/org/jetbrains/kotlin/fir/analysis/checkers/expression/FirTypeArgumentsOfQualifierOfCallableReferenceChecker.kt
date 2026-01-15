@@ -13,8 +13,6 @@ import org.jetbrains.kotlin.fir.analysis.checkers.FE10LikeConeSubstitutor
 import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.checkUpperBoundViolated
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
-import org.jetbrains.kotlin.fir.analysis.checkers.isExplicitParentOfResolvedQualifier
-import org.jetbrains.kotlin.fir.analysis.checkers.isStandalone
 import org.jetbrains.kotlin.fir.analysis.checkers.toTypeArgumentsWithSourceInfo
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.expressions.FirCallableReferenceAccess
