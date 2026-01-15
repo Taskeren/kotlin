@@ -381,10 +381,9 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
     private val FirResolvedQualifier.ownTypeArguments: List<FirTypeProjection>
         get() = typeArguments.subList(0, typeArguments.size - (explicitParent?.typeArguments?.size ?: 0))
 
-    private fun FirTypeProjection?.toConeTypeProjectionInLHS(): ConeTypeProjection = when (this) {
+    private fun FirTypeProjection.toConeTypeProjectionInLHS(): ConeTypeProjection = when (this) {
         is FirTypeProjectionWithVariance -> typeRef.coneType.toTypeProjection(variance)
 
-        null, // in this case, the diagnostic is already not null
         is FirPlaceholderProjection, // reported separately in the checker
         is FirStarProjection,
             -> ConeStarProjection
@@ -410,7 +409,8 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
 
         if (diagnostic != null) {
             for (typeArgumentIndex in 0..<expectedNumberOfExplicitTypeArguments) {
-                val coneTypeProjection = qualifier.typeArguments.getOrNull(typeArgumentIndex).toConeTypeProjectionInLHS()
+                val coneTypeProjection =
+                    qualifier.typeArguments.getOrNull(typeArgumentIndex)?.toConeTypeProjectionInLHS() ?: ConeStarProjection
                 add(coneTypeProjection)
             }
         } else {
@@ -424,7 +424,7 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
                         currentClass.ownTypeParameterSymbols.size,
                         currentClass,
                         currentQualifier.source!!,
-                        isNewErrorForCallableReferenceLHS = true,
+                        isDeprecationErrorForCallableReferenceLHS = true,
                     )
                 }
 

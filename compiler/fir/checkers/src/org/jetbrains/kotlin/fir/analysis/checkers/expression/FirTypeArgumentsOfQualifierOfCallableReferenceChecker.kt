@@ -43,23 +43,25 @@ object FirTypeArgumentsOfQualifierOfCallableReferenceChecker : FirCallableRefere
 
         for (diagnostic in expression.nonFatalDiagnostics) {
             when (diagnostic) {
-                is ConeWrongNumberOfTypeArgumentsError if !diagnostic.isNewErrorForCallableReferenceLHS -> {
-                    reporter.reportOn(
-                        diagnostic.source,
-                        FirErrors.WRONG_NUMBER_OF_TYPE_ARGUMENTS,
-                        diagnostic.desiredCount,
-                        diagnostic.symbol,
-                        // here, `desiredCount` corresponds to the number of type parameters for all parts of the qualifier altogether
-                        positioningStrategy = SourceElementPositioningStrategies.DEFAULT,
-                    )
-                }
                 is ConeWrongNumberOfTypeArgumentsError -> {
-                    reporter.reportOn(
-                        diagnostic.source,
-                        FirErrors.WRONG_NUMBER_OF_TYPE_ARGUMENTS_IN_CALLABLE_REFERENCE_LHS,
-                        diagnostic.desiredCount,
-                        diagnostic.symbol,
-                    )
+                    if (diagnostic.isDeprecationErrorForCallableReferenceLHS) {
+                        reporter.reportOn(
+                            diagnostic.source,
+                            FirErrors.WRONG_NUMBER_OF_TYPE_ARGUMENTS_IN_CALLABLE_REFERENCE_LHS,
+                            diagnostic.desiredCount,
+                            diagnostic.symbol,
+                        )
+                    } else {
+                        reporter.reportOn(
+                            diagnostic.source,
+                            FirErrors.WRONG_NUMBER_OF_TYPE_ARGUMENTS,
+                            diagnostic.desiredCount,
+                            diagnostic.symbol,
+                            // here, `desiredCount` corresponds to the number of type parameters for all parts of the qualifier altogether,
+                            // hence reporting on the whole qualifier
+                            positioningStrategy = SourceElementPositioningStrategies.DEFAULT,
+                        )
+                    }
                 }
             }
         }

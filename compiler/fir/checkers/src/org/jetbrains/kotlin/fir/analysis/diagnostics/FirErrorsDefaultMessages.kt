@@ -2024,7 +2024,7 @@ object FirErrorsDefaultMessages : BaseDiagnosticRendererFactory() {
         )
         map.put(
             WRONG_NUMBER_OF_TYPE_ARGUMENTS_IN_CALLABLE_REFERENCE_LHS,
-            "$wrongNumberOfTypeArguments in left-hand side of callable reference for ''{1}''.",
+            "$wrongNumberOfTypeArguments for ''{1}''.",
             null,
             SYMBOL,
         )
