@@ -51,13 +51,6 @@ class VariableReadinessCalculator(
         HAS_NO_RELATION_TO_ANY_OUTPUT_TYPE,
         HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND,
 
-        // K1 used this for reified type parameters, mainly to get `discriminateNothingForReifiedParameter.kt` working.
-        // KT-55691 lessens the need for this readiness kind in K2, however it still needs it for, e.g., `reifiedToNothing.kt`.
-        // TODO: consider deprioritizing Nothing in relation systems like `Nothing <: T <: SomeType` (see KT-76443)
-        //  and not using anymore this readiness kind in K2.
-        //  Related issues: KT-32358 (especially kt32358_3.kt test)
-        REIFIED,
-
         // *** "ready for fixation" kinds ***
         // Prefer `LOWER` `T :> SomeRegularType` to `UPPER` `T <: SomeRegularType` for KT-41934.
         // Prefer `LOWER` constraint also to `EQUALS` `T = SomeRegularType` because of the test
@@ -122,7 +115,6 @@ class VariableReadinessCalculator(
         readiness[Q.HAS_PROPER_NON_TRIVIAL_CONSTRAINTS_OTHER_THAN_INCORPORATED_FROM_DECLARED_UPPER_BOUND] =
             !hasOnlyIncorporatedConstraintsFromDeclaredUpperBound()
 
-        readiness[Q.REIFIED] = isReified()
         readiness[Q.HAS_PROPER_NON_NOTHING_NON_ILT_LOWER_CONSTRAINT] = hasLowerNonNothingNonIltProperConstraint()
 
         val (_, hasProperNonIltConstraint) = computeIltConstraintsRelatedFlags()
