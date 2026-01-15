@@ -315,9 +315,9 @@ public val KtProperty.symbol: KaVariableSymbol
  */
 // Auto-generated bridge. DO NOT EDIT MANUALLY!
 @KaContextParameterApi
-context(s: KaSession)
+context(session: KaSession)
 public val KtBackingField.symbol: KaBackingFieldSymbol
-    get() = with(s) { symbol }
+    get() = with(session) { symbol }
 
 /**
  * A [KaAnonymousObjectSymbol] for the given [KtObjectLiteralExpression].
