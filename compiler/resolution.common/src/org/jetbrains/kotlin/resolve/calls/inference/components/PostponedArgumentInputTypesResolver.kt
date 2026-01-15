@@ -574,19 +574,8 @@ class PostponedArgumentInputTypesResolver(
             }
         }
 
-        val argumentsForFunctionTypeOrSubtype = expectedType.extractArgumentsForFunctionTypeOrSubtype()
-        if (!c.isK2 || argumentsForFunctionTypeOrSubtype.size != argument.inputTypes.size) {
-            fixNextReadyVariableForParameterType(
-                argumentsForFunctionTypeOrSubtype,
-                postponedArguments,
-                topLevelType,
-                dependencyProvider,
-                resolvedAtomProvider,
-            ).let { if (!c.isK2) return it }
-        }
-
         return fixNextReadyVariableForParameterType(
-            argument.inputTypes,
+            if (!c.isK2) expectedType.extractArgumentsForFunctionTypeOrSubtype() else argument.inputTypes,
             postponedArguments,
             topLevelType,
             dependencyProvider,
