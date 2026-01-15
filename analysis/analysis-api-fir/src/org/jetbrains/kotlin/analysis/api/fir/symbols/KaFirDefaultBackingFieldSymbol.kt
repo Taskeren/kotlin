@@ -45,7 +45,7 @@ internal class KaFirDefaultBackingFieldSymbol(
         get() = withValidityAssertion { KaFirAnnotationListForDeclaration.create(firSymbol, builder) }
 
     override fun createPointer(): KaSymbolPointer<KaBackingFieldSymbol> = withValidityAssertion {
-        return KaBaseBackingFieldSymbolPointer(backingOwningProperty.createPointer(), this)
+        KaBaseBackingFieldSymbolPointer(backingOwningProperty.createPointer(), this)
     }
 
     override fun equals(other: Any?): Boolean {
