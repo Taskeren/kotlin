@@ -66,7 +66,7 @@ internal class KaFirBackingFieldSymbol private constructor(
         }
 
     override fun createPointer(): KaSymbolPointer<KaBackingFieldSymbol> = withValidityAssertion {
-        return psiBasedSymbolPointerOfTypeIfSource<KaBackingFieldSymbol>()
+        psiBasedSymbolPointerOfTypeIfSource<KaBackingFieldSymbol>()
             ?: KaBaseBackingFieldSymbolPointer(backingOwningProperty.createPointer(), this)
     }
 
