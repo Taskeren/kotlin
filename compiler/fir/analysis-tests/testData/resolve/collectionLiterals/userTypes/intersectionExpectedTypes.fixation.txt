@@ -1,0 +1,81 @@
+CHOSEN for fixation: TypeVariable(T) --- READY_FOR_FIXATION_LOWER
+     >: it(A & B)
+     = it(A & B) (inferred during fixation)
+    FIXED TO: it(A & B)
+********************************
+CHOSEN for fixation: TypeVariable(K) --- READY_FOR_FIXATION_LOWER
+     >: ILT: 42
+     = kotlin/Int (inferred during fixation)
+    FIXED TO: kotlin/Int
+********************************
+CHOSEN for fixation: TypeVariable(T) --- READY_FOR_FIXATION_LOWER
+     >: it(A & B)
+     = it(A & B) (inferred during fixation)
+    FIXED TO: it(A & B)
+********************************
+CHOSEN for fixation: TypeVariable(K) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+    FIXED TO: ERROR CLASS: Cannot infer argument for type parameter K
+********************************
+CHOSEN for fixation: TypeVariable(K) --- READY_FOR_FIXATION_LOWER
+     >: <anonymous>
+     >: <anonymous>
+     = it(A & B) (inferred during fixation)
+    FIXED TO: it(A & B)
+********************************
+CHOSEN for fixation: TypeVariable(T) --- READY_FOR_FIXATION_LOWER
+     >: it(A & B)
+     = it(A & B) (inferred during fixation)
+    FIXED TO: it(A & B)
+********************************
+CHOSEN for fixation: TypeVariable(K) --- READY_FOR_FIXATION_LOWER
+     >: kotlin/String
+     = kotlin/String (inferred during fixation)
+    FIXED TO: kotlin/String
+********************************
+CHOSEN for fixation: TypeVariable(K) --- READY_FOR_FIXATION_UPPER
+     >: kotlin/Nothing
+     <: U?
+     = kotlin/Nothing (inferred during fixation)
+    FIXED TO: kotlin/Nothing
+********************************
+CHOSEN for fixation: TypeVariable(X) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+    FIXED TO: A
+********************************
+CHOSEN for fixation: TypeVariable(T) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+     >: it(B & TypeVariable(X) & Any)
+********************************
+CHOSEN for fixation: TypeVariable(X) --- READY_FOR_FIXATION_LOWER
+     <: TypeVariable(T)?
+     >: A
+     = A (inferred during fixation)
+    FIXED TO: A
+TypeVariable(T) --- READY_FOR_FIXATION_LOWER
+     >: A
+     >: it(B & A)
+     = A (inferred during fixation)
+********************************
+CHOSEN for fixation: TypeVariable(T) --- READY_FOR_FIXATION_LOWER
+     >: A
+     >: it(B & A)
+     = A (inferred during fixation)
+    FIXED TO: A
+********************************
+CHOSEN for fixation: TypeVariable(X) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+    FIXED TO: ERROR CLASS: Cannot infer argument for type parameter X
+********************************
+CHOSEN for fixation: TypeVariable(T) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+     >: it(B & TypeVariable(X) & Any)
+********************************
+CHOSEN for fixation: TypeVariable(X) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+     <: TypeVariable(T)?
+    FIXED TO: ERROR CLASS: Cannot infer argument for type parameter X
+TypeVariable(T) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+********************************
+CHOSEN for fixation: TypeVariable(T) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+    FIXED TO: ERROR CLASS: Cannot infer argument for type parameter T
+********************************
+CHOSEN for fixation: TypeVariable(K) --- READY_FOR_FIXATION_LOWER
+     >: ILT: 42
+     = kotlin/Int (inferred during fixation)
+    FIXED TO: kotlin/Int
+********************************

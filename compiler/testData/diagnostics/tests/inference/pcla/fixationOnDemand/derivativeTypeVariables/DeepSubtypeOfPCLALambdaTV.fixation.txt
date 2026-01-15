@@ -1,0 +1,124 @@
+CHOSEN for fixation: TypeVariable(OT) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+    FIXED TO: ScopeOwner
+********************************
+CHOSEN for fixation: TypeVariable(PNT) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+     <: TypeVariable(OT)
+********************************
+CHOSEN for fixation: TypeVariable(OT) --- READY_FOR_FIXATION_LOWER
+     >: TypeVariable(PNT)
+     >: ScopeOwner
+     = ScopeOwner
+    FIXED TO: ScopeOwner
+TypeVariable(PNT) --- READY_FOR_FIXATION_UPPER
+     = ScopeOwner
+********************************
+CHOSEN for fixation: TypeVariable(PNT) --- READY_FOR_FIXATION_UPPER
+     = ScopeOwner
+    FIXED TO: ScopeOwner
+********************************
+CHOSEN for fixation: TypeVariable(OT) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+    FIXED TO: BaseType
+********************************
+CHOSEN for fixation: TypeVariable(PNT) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+     <: TypeVariable(OT)
+********************************
+CHOSEN for fixation: TypeVariable(OT) --- READY_FOR_FIXATION_LOWER
+     >: TypeVariable(PNT)
+     >: ScopeOwner
+     >: Interloper
+     = BaseType (inferred during fixation)
+    FIXED TO: BaseType
+TypeVariable(PNT) --- READY_FOR_FIXATION_LOWER
+     >: Interloper
+     <: BaseType
+     = Interloper (inferred during fixation)
+********************************
+CHOSEN for fixation: TypeVariable(PNT) --- READY_FOR_FIXATION_LOWER
+     >: Interloper
+     <: BaseType
+     = Interloper (inferred during fixation)
+    FIXED TO: Interloper
+********************************
+CHOSEN for fixation: TypeVariable(OT) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+    FIXED TO: ScopeOwner
+********************************
+CHOSEN for fixation: TypeVariable(PNT) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+     <: TypeVariable(OT)
+     <: CapturedType(in TypeVariable(OT))
+********************************
+CHOSEN for fixation: TypeVariable(OT) --- READY_FOR_FIXATION_LOWER
+     >: TypeVariable(PNT)
+     >: ScopeOwner
+     = ScopeOwner
+    FIXED TO: ScopeOwner
+TypeVariable(PNT) --- READY_FOR_FIXATION_UPPER
+     = ScopeOwner
+     <: CapturedType(in ScopeOwner)
+     <: CapturedType(in ScopeOwner)
+********************************
+CHOSEN for fixation: TypeVariable(PNT) --- READY_FOR_FIXATION_UPPER
+     = ScopeOwner
+     <: CapturedType(in ScopeOwner)
+     <: CapturedType(in ScopeOwner)
+    FIXED TO: ScopeOwner
+********************************
+CHOSEN for fixation: TypeVariable(OT) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+    FIXED TO: BaseType
+********************************
+CHOSEN for fixation: TypeVariable(PNT) --- WITHOUT_PROPER_ARGUMENT_CONSTRAINT
+     <: TypeVariable(OT)
+     <: CapturedType(in TypeVariable(OT))
+********************************
+CHOSEN for fixation: TypeVariable(OT) --- READY_FOR_FIXATION_LOWER
+     >: TypeVariable(PNT)
+     >: ScopeOwner
+     <: CapturedType(in TypeVariable(OT))
+     >: Interloper
+     = BaseType (inferred during fixation)
+     <: CapturedType(in BaseType) (inferred during fixation)
+     <: CapturedType(in BaseType) (inferred during fixation)
+    FIXED TO: BaseType
+TypeVariable(PNT) --- READY_FOR_FIXATION_LOWER
+     >: Interloper
+     <: BaseType
+     <: CapturedType(in BaseType)
+     = BaseType
+     <: CapturedType(in BaseType) (inferred during fixation)
+********************************
+CHOSEN for fixation: TypeVariable(PNT) --- READY_FOR_FIXATION_LOWER
+     >: Interloper
+     <: CapturedType(in BaseType)
+     = BaseType
+     <: CapturedType(in BaseType)
+    FIXED TO: BaseType
+********************************
+CHOSEN for fixation: TypeVariable(K) --- READY_FOR_FIXATION_UPPER
+     >: kotlin/Nothing
+     <: T?
+     = kotlin/Nothing (inferred during fixation)
+    FIXED TO: kotlin/Nothing
+********************************
+CHOSEN for fixation: TypeVariable(CT) --- READY_FOR_FIXATION_LOWER
+     >: T
+     = T (inferred during fixation)
+    FIXED TO: T
+********************************
+CHOSEN for fixation: TypeVariable(T) --- READY_FOR_FIXATION_UPPER
+     = PNT
+    FIXED TO: PNT
+********************************
+CHOSEN for fixation: TypeVariable(CT) --- READY_FOR_FIXATION_LOWER
+     >: T
+     = T (inferred during fixation)
+    FIXED TO: T
+********************************
+CHOSEN for fixation: TypeVariable(T) --- READY_FOR_FIXATION_UPPER
+     = PNT
+    FIXED TO: PNT
+********************************
+CHOSEN for fixation: TypeVariable(K) --- READY_FOR_FIXATION_UPPER
+     >: kotlin/Nothing
+     <: OT?
+     = kotlin/Nothing (inferred during fixation)
+    FIXED TO: kotlin/Nothing
+********************************
