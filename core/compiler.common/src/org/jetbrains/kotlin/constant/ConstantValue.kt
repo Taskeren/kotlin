@@ -139,7 +139,7 @@ class KClassValue(value: Value) : ConstantValue<KClassValue.Value>(value) {
         /**
          * @param irClass If this constant value is produced by the IR interpreter, the `IrClass` instance of the local class.
          */
-        data class LocalClass(val irClass: Any) : Value()
+        data class LocalClass(val firClassSymbol: Any?) : Value()
     }
 
     constructor(value: ClassLiteralValue) : this(Value.NormalClass(value))
