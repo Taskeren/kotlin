@@ -150,7 +150,7 @@ constructor(
     @get:Internal
     val languageSettings: LanguageSettings = compilation.defaultSourceSet.languageSettings
 
-    @get:Internal // KT-83353: Changed to Internal
+    @get:Internal
     internal val disableCache: Provider<Boolean> = objects.propertyWithConvention(
         simpleKotlinNativeVersion
             .map { KotlinToolingVersion(it) }
