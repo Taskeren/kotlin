@@ -137,7 +137,7 @@ class KClassValue(value: Value) : ConstantValue<KClassValue.Value>(value) {
         }
 
         /**
-         * @param firClassSymbol is FIR symbol of the local class (both if the the value was computed by FIR or IR evaluator).
+         * @param firClassSymbol FIR symbol of the local class (both if the value was computed by FIR or IR evaluator).
          * It is used to extract the proper FQName of the local class on JVM during annotation arguments serialization.
          */
         data class LocalClass(val firClassSymbol: Any?) : Value()
