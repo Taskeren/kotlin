@@ -47,6 +47,7 @@ dependencies {
     robolectricDependency("org.robolectric:android-all:16-robolectric-13921718")
 
     robolectricClasspath(commonDependency("org.robolectric", "robolectric"))
+    robolectricClasspath("androidx.test.espresso:espresso-idling-resource:3.7.0")
     robolectricClasspath(project(":plugins:parcelize:parcelize-runtime")) { isTransitive = false }
 
     parcelizeRuntimeForTests(project(":plugins:parcelize:parcelize-runtime")) { isTransitive = false }
