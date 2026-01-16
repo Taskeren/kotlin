@@ -78,4 +78,4 @@ interface KlibBasedEnvironmentConfigurator {
 
 val TestServices.klibEnvironmentConfigurator: KlibBasedEnvironmentConfigurator
     get() = environmentConfigurators.firstIsInstanceOrNull<KlibBasedEnvironmentConfigurator>()
-        ?: assertions.fail { "No registered ${KlibBasedEnvironmentConfigurator::class.java.simpleName}" }
+        ?: error("No registered ${KlibBasedEnvironmentConfigurator::class.java.simpleName}")
