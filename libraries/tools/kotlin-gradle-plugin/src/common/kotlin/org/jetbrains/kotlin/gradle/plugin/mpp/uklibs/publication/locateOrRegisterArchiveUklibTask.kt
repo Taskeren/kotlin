@@ -84,8 +84,6 @@ private suspend fun Project.createOutgoingUklibConfigurationsAndUsages(
             attribute(isUklib, isUklibTrue)
         }
         inheritCompilationDependenciesFromPublishedCompilations(publishedCompilations.map { it.compilation })
-        @Suppress("DEPRECATION")
-        isVisible = false
     }
 
     val metadataCompilations = publishedCompilations.filter { it.compilation.platformType == KotlinPlatformType.common }
@@ -124,8 +122,6 @@ private suspend fun Project.createOutgoingUklibConfigurationsAndUsages(
             attribute(isUklib, isUklibTrue)
         }
         inheritRuntimeDependenciesFromPublishedCompilations(publishedCompilations.map { it.compilation })
-        @Suppress("DEPRECATION")
-        isVisible = false
     }
 
     /**

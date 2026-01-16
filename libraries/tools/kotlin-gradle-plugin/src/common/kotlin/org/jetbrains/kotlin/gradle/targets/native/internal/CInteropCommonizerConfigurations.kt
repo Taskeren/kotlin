@@ -103,9 +103,6 @@ internal suspend fun Project.locateOrCreateCommonizedCInteropDependencyConfigura
     configurations.findByName(configurationName)?.let { return it }
 
     val configuration = configurations.createResolvable(configurationName).also { configuration ->
-        @Suppress("DEPRECATION")
-        configuration.isVisible = false
-
         // Extends from Metadata Configuration associated with given source set to ensure matching
         configuration.extendsFrom(sourceSet.internal.resolvableMetadataConfiguration)
         setupBasicCommonizedCInteropConfigurationAttributes(configuration, commonizerTarget)

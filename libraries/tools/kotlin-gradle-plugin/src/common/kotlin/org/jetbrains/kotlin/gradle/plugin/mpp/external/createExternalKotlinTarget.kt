@@ -45,25 +45,17 @@ fun <T : DecoratedExternalKotlinTarget> KotlinMultiplatformExtension.createExter
     val sourcesElementsConfiguration = project.configurations
         .maybeCreateConsumable(lowerCamelCaseName(descriptor.targetName, "sourcesElements"))
 
-    fun Configuration.notVisible() = apply {
-        @Suppress("DEPRECATION")
-        isVisible = false
-    }
     val apiElementsPublishedConfiguration = project.configurations
         .maybeCreateDependencyScope(lowerCamelCaseName(descriptor.targetName, "apiElements-published"))
-        .notVisible()
 
     val runtimeElementsPublishedConfiguration = project.configurations
         .maybeCreateDependencyScope(lowerCamelCaseName(descriptor.targetName, "runtimeElements-published"))
-        .notVisible()
 
     val sourcesElementsPublishedConfiguration = project.configurations
         .maybeCreateDependencyScope(lowerCamelCaseName(descriptor.targetName, "sourcesElements-published"))
-        .notVisible()
 
     val resourcesElementsPublishedConfiguration = project.configurations
         .maybeCreateDependencyScope(lowerCamelCaseName(descriptor.targetName, "resourcesElements-published"))
-        .notVisible()
 
     val kotlinTargetComponent = ExternalKotlinTargetComponent(
         ExternalKotlinTargetComponent.TargetProvider.byTargetName(this, descriptor.targetName)

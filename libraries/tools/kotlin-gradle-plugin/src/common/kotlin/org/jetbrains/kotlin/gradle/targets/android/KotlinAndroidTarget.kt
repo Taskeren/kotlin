@@ -314,8 +314,6 @@ abstract class KotlinAndroidTarget @Inject constructor(
             ?: error("Configuration $apiElementsConfigurationName was not found")
         return project.configurations.createConsumable(sourcesElementsConfigurationName).apply {
             description = "Source files of Android ${variantName}."
-            @Suppress("DEPRECATION")
-            isVisible = false
 
             apiElementsConfiguration.copyAttributesTo(project.providers, dest = this)
             configureSourcesPublicationAttributes(this@KotlinAndroidTarget)

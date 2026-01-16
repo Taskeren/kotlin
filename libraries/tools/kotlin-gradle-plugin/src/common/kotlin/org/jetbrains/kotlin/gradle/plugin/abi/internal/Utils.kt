@@ -62,8 +62,6 @@ internal fun Project.prepareAbiClasspath(): Configuration {
 
     return configurations.createResolvable(ABI_TOOLS_DEPENDENCY_CONFIGURATION)
         .also {
-            @Suppress("DEPRECATION")
-            it.isVisible = false
             it.defaultDependencies { dependencies ->
                 dependencies.add(
                     project.dependencies.create("org.jetbrains.kotlin:abi-tools:$version")

@@ -250,10 +250,7 @@ class Kapt3GradleSubplugin @Inject internal constructor() :
         )
 
         val kaptClasspathConfiguration = project.configurations.createResolvable("kaptClasspath_$taskName")
-            .setExtendsFrom(kaptClasspathConfigurations).also {
-                @Suppress("DEPRECATION")
-                it.isVisible = false
-            }
+            .setExtendsFrom(kaptClasspathConfigurations)
         taskConfigAction.configureTaskProvider { taskProvider ->
             taskProvider.dependsOn(generateStubsTask)
 

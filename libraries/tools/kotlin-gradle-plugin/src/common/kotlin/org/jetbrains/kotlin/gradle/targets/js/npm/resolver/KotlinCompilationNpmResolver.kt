@@ -164,8 +164,6 @@ class KotlinCompilationNpmResolver(
             attributes.attribute(Usage.USAGE_ATTRIBUTE, KotlinUsages.consumerRuntimeUsage(target))
             attributes.attribute(Category.CATEGORY_ATTRIBUTE, project.categoryByName(Category.LIBRARY))
             attributes.attribute(publicPackageJsonAttribute, PUBLIC_PACKAGE_JSON_ATTR_VALUE)
-            @Suppress("DEPRECATION")
-            isVisible = false
             description = "NPM configuration for $compilation."
 
             /**
@@ -199,8 +197,6 @@ class KotlinCompilationNpmResolver(
             attributes.attribute(Usage.USAGE_ATTRIBUTE, KotlinUsages.consumerRuntimeUsage(target))
             attributes.attribute(Category.CATEGORY_ATTRIBUTE, project.categoryByName(Category.LIBRARY))
             attributes.attribute(publicPackageJsonAttribute, PUBLIC_PACKAGE_JSON_ATTR_VALUE)
-            @Suppress("DEPRECATION")
-            isVisible = false
         }
     }
 
