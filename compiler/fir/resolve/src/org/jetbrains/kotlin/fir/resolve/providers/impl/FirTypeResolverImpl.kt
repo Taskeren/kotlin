@@ -403,40 +403,37 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
     }
 
     private fun matchQualifierPartsAndClassesForLHS(
-        /**
-         * `null` means we are only interested in diagnostic
-         */
-        allTypeArguments: MutableList<ConeTypeProjection>?,
         qualifier: FirResolvedQualifier,
         classSymbol: FirClassLikeSymbol<*>,
-    ): ConeDiagnostic? {
+    ): Pair<List<ConeTypeProjection>, ConeDiagnostic?> {
         var diagnostic: ConeDiagnostic? = null
-        var currentQualifier = qualifier
-        var currentClass = classSymbol
+        val arguments = buildList {
+            var currentQualifier = qualifier
+            var currentClass = classSymbol
 
-        while (true) {
-            if (currentQualifier.ownTypeArguments.size != currentClass.ownTypeParameterSymbols.size) {
-                // in case of many mismatches, we will report the leftmost one
-                diagnostic = ConeWrongNumberOfTypeArgumentsError(
-                    currentClass.ownTypeParameterSymbols.size,
-                    currentClass,
-                    currentQualifier.source!!,
-                    isDeprecationErrorForCallableReferenceLHS = true,
-                )
-            }
-
-            allTypeArguments?.addOwnTypeArguments(currentQualifier)
-
-            when (val nextClass = currentQualifier.explicitParent?.symbol) {
-                is FirClassLikeSymbol if currentClass.isInner -> {
-                    currentClass = nextClass
-                    currentQualifier = currentQualifier.explicitParent!!
+            while (true) {
+                if (currentQualifier.ownTypeArguments.size != currentClass.ownTypeParameterSymbols.size) {
+                    // in case of many mismatches, we will report the leftmost one
+                    diagnostic = ConeWrongNumberOfTypeArgumentsError(
+                        currentClass.ownTypeParameterSymbols.size,
+                        currentClass,
+                        currentQualifier.source!!,
+                        isDeprecationErrorForCallableReferenceLHS = true,
+                    )
                 }
-                else -> break
+
+                addOwnTypeArguments(currentQualifier)
+
+                when (val nextClass = currentQualifier.explicitParent?.symbol) {
+                    is FirClassLikeSymbol if currentClass.isInner -> {
+                        currentClass = nextClass
+                        currentQualifier = currentQualifier.explicitParent!!
+                    }
+                    else -> break
+                }
             }
         }
-
-        return diagnostic
+        return arguments to diagnostic
     }
 
     private fun computeSubstitutorForLHS(
@@ -485,11 +482,13 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
                 allTypeArguments.add(coneTypeArgument)
             }
 
-            if (diagnostic == null) {
-                diagnostic = matchQualifierPartsAndClassesForLHS(null, qualifier, classSymbol)
-            }
+            val (_, diagnosticFromMatching) = matchQualifierPartsAndClassesForLHS(qualifier, classSymbol)
+            if (diagnostic == null) diagnostic = diagnosticFromMatching
         } else {
-            matchQualifierPartsAndClassesForLHS(allTypeArguments, qualifier, classSymbol)?.let { diagnostic = it }
+            matchQualifierPartsAndClassesForLHS(qualifier, classSymbol).let { (arguments, diagnosticFromMatching) ->
+                allTypeArguments.addAll(arguments)
+                diagnostic = diagnosticFromMatching
+            }
             if (allTypeArguments.size != classSymbol.typeParameterSymbols.size) {
                 val substitutor = computeSubstitutorForLHS(qualifier, configuration)
                 allTypeArguments.addImplicitTypeArguments(
