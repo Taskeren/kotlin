@@ -113,6 +113,8 @@ class WasmLoweringSingleModuleFacade(testServices: TestServices) :
             typeScriptFragment = typeScriptFragment,
             generateSourceMaps = generateSourceMaps,
             generateDwarf = generateDwarf,
+            mainModuleFragment = backendContext.irModuleFragment,
+            typeTracking = false,
         )
 
         val compileResult = linkAndCompileWasmIrToBinary(wasmIrToCompile)
