@@ -32,6 +32,7 @@ import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.util.OperatorNameConventions
 import org.jetbrains.kotlin.utils.findIsInstanceAnd
 import org.jetbrains.kotlin.utils.memoryOptimizedMap
+import org.jetbrains.kotlin.utils.memoryOptimizedPlus
 
 /**
  * Replaces SAM conversions with instances of interface-implementing classes.
@@ -159,15 +160,15 @@ abstract class SingleAbstractMethodLowering(val context: CommonBackendContext) :
     // Construct a class that wraps an invokable object into an implementation of an interface:
     //     class sam$n(private val invokable: F) : Interface { override fun method(...) = invokable(...) }
     private fun createObjectProxy(superType: IrType, wrapperVisibility: DescriptorVisibility, createFor: IrElement): IrClass {
-        val superInterface = superType.classifierOrFail.owner as IrClass
+        val superClass = superType.classifierOrFail.owner as IrClass
         // The language documentation prohibits casting lambdas to classes, but if it was allowed,
         // the `irDelegatingConstructorCall` in the constructor below would need to be modified.
-        assert(superInterface.kind == ClassKind.INTERFACE) { "SAM conversion to an abstract class not allowed" }
+        assert(superClass.kind == ClassKind.INTERFACE) { "SAM conversion to an abstract class not allowed" }
 
-        val superFqName = superInterface.fqNameWhenAvailable!!.asString().replace('.', '_')
+        val superFqName = superClass.fqNameWhenAvailable!!.asString().replace('.', '_')
         val inlinePrefix = if (wrapperVisibility == DescriptorVisibilities.PUBLIC) "\$i" else ""
         val wrapperName = Name.identifier("sam$inlinePrefix\$$superFqName$SAM_WRAPPER_SUFFIX")
-        val transformedSuperMethod = superInterface.functions.single { it.modality == Modality.ABSTRACT }
+        val transformedSuperMethod = superClass.functions.single { it.modality == Modality.ABSTRACT }
         val originalSuperMethod = getSuspendFunctionWithoutContinuation(transformedSuperMethod)
         // TODO: have psi2ir cast the argument to the correct function type. Also see the TODO
         //       about type parameters in `visitTypeOperator`.
@@ -178,7 +179,6 @@ abstract class SingleAbstractMethodLowering(val context: CommonBackendContext) :
                 context.symbols.functionN(originalSuperMethod.nonDispatchParameters.size).owner
         val wrappedFunctionType = getWrappedFunctionType(wrappedFunctionClass)
 
-        val superClass = getSuperClass(superType)
         val subclass = context.irFactory.buildClass {
             name = wrapperName
             origin = IrDeclarationOrigin.GENERATED_SAM_IMPLEMENTATION
@@ -186,7 +186,7 @@ abstract class SingleAbstractMethodLowering(val context: CommonBackendContext) :
             setSourceRange(createFor)
         }.apply {
             createThisReceiverParameter()
-            superTypes = listOf(superClass.defaultType, superType)// memoryOptimizedPlus getAdditionalSupertypes(superType)
+            superTypes = listOf(superType) memoryOptimizedPlus getAdditionalSupertypes(superType)
             parent = enclosingContainer!!
         }
 
@@ -227,11 +227,12 @@ abstract class SingleAbstractMethodLowering(val context: CommonBackendContext) :
             isSuspend = originalSuperMethod.isSuspend
             setSourceRange(createFor)
         }.apply {
-            overriddenSymbols = listOf(originalSuperMethod.symbol)
             val overriddenMethodsOfAny = originalSuperMethod.allOverridden().filter { it.parentAsClass == anyClass }
-            if (overriddenMethodsOfAny.isNotEmpty()) {
-                overriddenSymbols += overriddenMethodsOfAny.mapNotNull { method ->
-                    superClass.functions.firstOrNull { it.overrides(method) }?.symbol
+            overriddenSymbols = if (overriddenMethodsOfAny.isEmpty())
+                listOf(originalSuperMethod.symbol)
+            else overriddenMethodsOfAny.flatMap { method ->
+                subclass.superTypes.mapNotNull { superType ->
+                    superType.classOrFail.owner.functions.firstOrNull { it.overrides(method) }?.symbol
                 }
             }
             parameters = (listOf(subclass.thisReceiver!!) + originalSuperMethod.nonDispatchParameters)
@@ -258,7 +259,7 @@ abstract class SingleAbstractMethodLowering(val context: CommonBackendContext) :
             // Built function overrides the originalSuperMethod, while, if the parent class is already lowered, it would
             // transformedSuperMethod in its declaration list. We need not fake override in that case.
             // Later lowerings will fix it and replace the function with one overriding transformedSuperMethod.
-            mapOf(superInterface to (superInterface.declarationsAtFunctionReferenceLowering ?: superInterface.declarations.filter { it !== transformedSuperMethod }))
+            mapOf(superClass to (superClass.declarationsAtFunctionReferenceLowering ?: superClass.declarations.filter { it !== transformedSuperMethod }))
         )
 
         postprocessCreatedObjectProxy(subclass)
@@ -271,10 +272,10 @@ abstract class SingleAbstractMethodLowering(val context: CommonBackendContext) :
             irGetField(receiver, functionDelegateField)
         }.generate()
 
-    private fun getSuperClass(supertype: IrType): IrClass =
+    private fun getAdditionalSupertypes(supertype: IrType) =
         if (supertype.needEqualsHashCodeMethods)
-            context.symbols.functionAdapter.owner
-        else anyClass
+            listOf(context.symbols.functionAdapter.typeWith())
+        else emptyList()
 }
 
 /**

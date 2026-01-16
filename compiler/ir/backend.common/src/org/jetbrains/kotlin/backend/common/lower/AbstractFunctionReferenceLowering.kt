@@ -215,7 +215,6 @@ abstract class AbstractFunctionReferenceLowering<C : CommonBackendContext>(val c
         buildInvokeMethod(
             functionReference,
             functionReferenceClass,
-            superClassType.classOrFail.owner,
             superInterfaceType,
             fields,
         ).apply {
@@ -239,7 +238,6 @@ abstract class AbstractFunctionReferenceLowering<C : CommonBackendContext>(val c
     private fun buildInvokeMethod(
         functionReference: IrRichFunctionReference,
         functionReferenceClass: IrClass,
-        superClass: IrClass,
         superInterfaceType: IrType,
         boundFields: List<IrField>
     ): IrSimpleFunction {
@@ -277,11 +275,12 @@ abstract class AbstractFunctionReferenceLowering<C : CommonBackendContext>(val c
                 )
             }
             this.parameters += nonDispatchParameters
-            overriddenSymbols += superFunction.symbol
             val overriddenMethodsOfAny = superFunction.allOverridden().filter { it.parentAsClass == anyClass }
-            if (overriddenMethodsOfAny.isNotEmpty()) {
-                overriddenSymbols += overriddenMethodsOfAny.map { method ->
-                    superClass.functions.first { it.overrides(method) }.symbol
+            overriddenSymbols = if (overriddenMethodsOfAny.isEmpty())
+                listOf(superFunction.symbol)
+            else overriddenMethodsOfAny.flatMap { method ->
+                functionReferenceClass.superTypes.mapNotNull { superType ->
+                    superType.classOrFail.owner.functions.firstOrNull { it.overrides(method) }?.symbol
                 }
             }
 
