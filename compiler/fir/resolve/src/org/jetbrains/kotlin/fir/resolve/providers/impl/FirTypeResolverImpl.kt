@@ -113,7 +113,10 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
             }
         }
 
-        configuration.iterateScopesWithSubstitution(name, processor) { collector.applicability == CandidateApplicability.RESOLVED }
+        configuration.iterateScopesWithSubstitution(
+            name, processor,
+            stopIf = { collector.applicability == CandidateApplicability.RESOLVED },
+        )
 
         if (collector.applicability != CandidateApplicability.RESOLVED) {
             qualifierResolver.resolveFullyQualifiedSymbol(qualifier)?.let { (symbol, resolvedSymbolOrigin) ->
@@ -471,7 +474,7 @@ class FirTypeResolverImpl(private val session: FirSession) : FirTypeResolver() {
             }
         }
 
-        configuration.iterateScopesWithSubstitution(name, processor) { result != null }
+        configuration.iterateScopesWithSubstitution(name, processor, stopIf = { result != null })
 
         return result
     }
