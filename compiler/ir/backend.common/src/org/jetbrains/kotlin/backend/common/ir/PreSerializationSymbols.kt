@@ -54,6 +54,11 @@ import org.jetbrains.kotlin.types.Variance
  *  1. During `*Symbols` class construction we call a method on SymbolFinder.
  *  Depending on the implementation, we either get a symbol with the owner immediately (for pre-serialization), or the symbol is put in the deserialization queue (for backend).
  *  2. During the access of a symbol (later in lowerings), there shouldn't be any unbound symbols.
+ *
+ *  If we expect to have multiple symbols with the same fully qualified name, then it should be accessed using a lazy filter call.
+ *  This guarantees that the symbol will be put in the deserialization queue and properly filtered when first accessed.
+ *
+ *  Avoid using calls like `functionSymbols().single()`. While this works, it is quite hard to understand that is the problem that something goes wrong.
  */
 abstract class BaseSymbolsImpl(protected val irBuiltIns: IrBuiltIns) {
     private val symbolFinder = irBuiltIns.symbolFinder
