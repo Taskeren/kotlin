@@ -56,7 +56,7 @@ kotlin {
     }
 
     androidUnitTest.dependencies {
-        implementation("org.robolectric:robolectric:4.8")
+        implementation("org.robolectric:robolectric:4.16")
         implementation("androidx.test:core:1.4.0")
         implementation("androidx.test:core-ktx:1.4.0")
     }
