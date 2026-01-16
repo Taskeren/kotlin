@@ -7,9 +7,9 @@ data class Person(val id: Int, val name: String?)
 
 val person = Person(42, null)
 
-val <!SYNTAX!>[first, second]<!> = person
+<!NON_EXPORTABLE_TYPE!>val <!SYNTAX!>[first, second]<!> = person<!>
 
-<!SYNTAX!>[val id, var name]<!> = person
+<!NON_EXPORTABLE_TYPE!><!SYNTAX!>[val id, var name]<!> = person<!>
 
 fun main() {
     val [first, second] = person

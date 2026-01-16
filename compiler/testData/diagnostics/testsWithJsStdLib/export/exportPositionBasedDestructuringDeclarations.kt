@@ -2,8 +2,10 @@
 // OPT_IN: kotlin.js.ExperimentalJsExport
 // LANGUAGE: +NameBasedDestructuring
 
+@JsExport
 data class Person(val id: Int, val name: String?)
 
+@JsExport
 val person = Person(42, null)
 
 @JsExport
