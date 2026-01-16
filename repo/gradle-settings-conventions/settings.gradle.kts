@@ -47,7 +47,7 @@ develocity {
     }
     buildScan {
         capture {
-            uploadInBackground = !isTeamCity
+            uploadInBackground.set(!isTeamCity)
         }
 
         val overriddenUsername = (buildProperties.getOrNull("kotlin.build.scan.username") as? String)?.trim()
