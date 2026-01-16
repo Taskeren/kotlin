@@ -2,5 +2,6 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase Foundation Secur
 language = Objective-C
 package = platform.NearbyInteraction
 modules = NearbyInteraction
+apinotes = true
 compilerOpts = -framework NearbyInteraction
 linkerOpts = -framework NearbyInteraction

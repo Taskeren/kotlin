@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.SecurityUI
 
 modules = SecurityUI
+apinotes = true
 compilerOpts = -framework SecurityUI
 linkerOpts = -framework SecurityUI

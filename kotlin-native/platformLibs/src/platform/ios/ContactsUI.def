@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork Contacts CoreFoundation CoreFoundationBase CoreGra
 language = Objective-C
 package = platform.ContactsUI
 modules = ContactsUI
+apinotes = true
 
 compilerOpts = -framework ContactsUI
 linkerOpts = -framework ContactsUI

@@ -2,5 +2,6 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase Foundation Secur
 language = Objective-C
 package = platform.AppClip
 modules = AppClip
+apinotes = true
 compilerOpts = -framework AppClip
 linkerOpts = -framework AppClip

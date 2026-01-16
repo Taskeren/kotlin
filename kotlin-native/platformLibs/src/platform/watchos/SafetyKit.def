@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.SafetyKit
 
 modules = SafetyKit
+apinotes = true
 compilerOpts = -framework SafetyKit
 linkerOpts = -framework SafetyKit

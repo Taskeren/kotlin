@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.LocalAuthenticationEmbeddedUI
 
 modules = LocalAuthenticationEmbeddedUI
+apinotes = true
 compilerOpts = -framework LocalAuthenticationEmbeddedUI
 linkerOpts = -framework LocalAuthenticationEmbeddedUI

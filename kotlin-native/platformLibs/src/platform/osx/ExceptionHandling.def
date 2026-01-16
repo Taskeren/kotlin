@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.ExceptionHandling
 modules = ExceptionHandling
+apinotes = true
 
 compilerOpts = -framework ExceptionHandling
 linkerOpts = -framework ExceptionHandling

@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase Foundation Secur
 language = Objective-C
 package = platform.MetricKit
 modules = MetricKit
+apinotes = true
 
 compilerOpts = -framework MetricKit
 linkerOpts = -framework MetricKit

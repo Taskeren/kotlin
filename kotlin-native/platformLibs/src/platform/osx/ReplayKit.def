@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.ReplayKit
 
 modules = ReplayKit
+apinotes = true
 compilerOpts = -framework ReplayKit
 linkerOpts = -framework ReplayKit

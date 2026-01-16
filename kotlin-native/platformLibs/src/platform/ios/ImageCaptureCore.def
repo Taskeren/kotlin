@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Fou
 language = Objective-C
 package = platform.ImageCaptureCore
 modules = ImageCaptureCore
+apinotes = true
 
 compilerOpts = -framework ImageCaptureCore
 linkerOpts = -framework ImageCaptureCore

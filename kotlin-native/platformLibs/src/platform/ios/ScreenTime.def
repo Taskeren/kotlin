@@ -2,5 +2,6 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.ScreenTime
 modules = ScreenTime
+apinotes = true
 compilerOpts = -framework ScreenTime
 linkerOpts = -framework ScreenTime

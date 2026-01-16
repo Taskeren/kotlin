@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.iTunesLibrary
 modules = iTunesLibrary
+apinotes = true
 
 compilerOpts = -framework iTunesLibrary
 linkerOpts = -framework iTunesLibrary

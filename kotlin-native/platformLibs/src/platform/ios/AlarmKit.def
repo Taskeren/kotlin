@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.AlarmKit
 
 modules = AlarmKit
+apinotes = true
 compilerOpts = -framework AlarmKit
 linkerOpts = -framework AlarmKit

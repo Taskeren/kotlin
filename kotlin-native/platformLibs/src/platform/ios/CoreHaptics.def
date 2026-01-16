@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase Foundation Secur
 language = Objective-C
 package = platform.CoreHaptics
 modules = CoreHaptics
+apinotes = true
 
 compilerOpts = -framework CoreHaptics
 linkerOpts = -framework CoreHaptics

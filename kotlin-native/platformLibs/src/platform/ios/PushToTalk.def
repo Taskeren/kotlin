@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.PushToTalk
 
 modules = PushToTalk
+apinotes = true
 compilerOpts = -framework PushToTalk
 linkerOpts = -framework PushToTalk

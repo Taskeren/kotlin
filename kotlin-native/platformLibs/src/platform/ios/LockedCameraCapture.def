@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.LockedCameraCapture
 
 modules = LockedCameraCapture
+apinotes = true
 compilerOpts = -framework LockedCameraCapture
 linkerOpts = -framework LockedCameraCapture

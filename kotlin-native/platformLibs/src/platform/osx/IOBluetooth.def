@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreAudio CoreAudioTypes CoreFoundation CoreFounda
 language = Objective-C
 package = platform.IOBluetooth
 modules = IOBluetooth
+apinotes = true
 
 compilerOpts = -framework IOBluetooth
 linkerOpts = -framework IOBluetooth

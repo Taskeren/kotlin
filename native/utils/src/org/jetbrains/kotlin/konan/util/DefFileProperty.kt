@@ -48,7 +48,12 @@ sealed interface DefFileProperty<T> {
         ExcludeSystemLibs("excludeSystemLibs"),
         ExcludeDependentModules("excludeDependentModules"),
         DisableDesignatedInitializerChecks("disableDesignatedInitializerChecks"),
-        AllowIncludingObjCCategoriesFromDefFile("allowIncludingObjCCategoriesFromDefFile");
+        AllowIncludingObjCCategoriesFromDefFile("allowIncludingObjCCategoriesFromDefFile"),
+        /**
+         * When true, enables API Notes support by adding -fmodules and -fapinotes-modules flags.
+         * This allows clang to read annotations (like SwiftName) from .apinotes files.
+         */
+        ApiNotes("apinotes");
 
         override fun parse(rawValue: String?): Boolean = rawValue.toBoolean()
     }

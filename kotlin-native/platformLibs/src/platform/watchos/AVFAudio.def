@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.AVFAudio
 
 modules = AVFAudio
+apinotes = true
 compilerOpts = -framework AVFAudio
 linkerOpts = -framework AVFAudio

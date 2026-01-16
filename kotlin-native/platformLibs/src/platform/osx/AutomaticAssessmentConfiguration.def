@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.AutomaticAssessmentConfiguration
 modules = AutomaticAssessmentConfiguration
+apinotes = true
 
 compilerOpts = -framework AutomaticAssessmentConfiguration
 linkerOpts = -framework AutomaticAssessmentConfiguration

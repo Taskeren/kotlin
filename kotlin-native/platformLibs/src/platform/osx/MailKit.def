@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.MailKit
 
 modules = MailKit
+apinotes = true
 compilerOpts = -framework MailKit
 linkerOpts = -framework MailKit

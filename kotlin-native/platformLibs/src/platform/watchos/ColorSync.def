@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.ColorSync
 
 modules = ColorSync
+apinotes = true
 compilerOpts = -framework ColorSync
 linkerOpts = -framework ColorSync

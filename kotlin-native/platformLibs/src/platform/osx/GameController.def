@@ -2,6 +2,7 @@ depends = AppKit ApplicationServices CFCGTypes CFNetwork CloudKit CoreData CoreF
 language = Objective-C
 package = platform.GameController
 modules = GameController
+apinotes = true
 
 compilerOpts = -framework GameController
 linkerOpts = -framework GameController

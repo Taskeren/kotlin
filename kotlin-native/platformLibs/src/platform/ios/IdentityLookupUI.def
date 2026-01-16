@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.IdentityLookupUI
 modules = IdentityLookupUI
+apinotes = true
 
 compilerOpts = -framework IdentityLookupUI
 linkerOpts = -framework IdentityLookupUI

@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.ScreenCaptureKit
 
 modules = ScreenCaptureKit
+apinotes = true
 compilerOpts = -framework ScreenCaptureKit
 linkerOpts = -framework ScreenCaptureKit

@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.CoreMIDI
 modules = CoreMIDI
+apinotes = true
 
 compilerOpts = -framework CoreMIDI
 linkerOpts = -framework CoreMIDI

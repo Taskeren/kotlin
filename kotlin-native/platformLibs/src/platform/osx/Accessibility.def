@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.Accessibility
 
 modules = Accessibility
+apinotes = true
 compilerOpts = -framework Accessibility
 linkerOpts = -framework Accessibility

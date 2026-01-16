@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.DeviceCheck
 modules = DeviceCheck
+apinotes = true
 
 compilerOpts = -framework DeviceCheck
 linkerOpts = -framework DeviceCheck

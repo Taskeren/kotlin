@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.SharedWithYou
 
 modules = SharedWithYou
+apinotes = true
 compilerOpts = -framework SharedWithYou
 linkerOpts = -framework SharedWithYou

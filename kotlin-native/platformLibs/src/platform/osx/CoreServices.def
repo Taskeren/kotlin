@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase DiskArbitration 
 language = Objective-C
 package = platform.CoreServices
 modules = CoreServices
+apinotes = true
 
 excludedFunctions = MDItemCopyAttributeList MDQueryGetSortOptionFlagsForAttribute
 compilerOpts = -framework CoreServices

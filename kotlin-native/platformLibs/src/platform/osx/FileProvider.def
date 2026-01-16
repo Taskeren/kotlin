@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.FileProvider
 modules = FileProvider
+apinotes = true
 
 compilerOpts = -framework FileProvider
 linkerOpts = -framework FileProvider

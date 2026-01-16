@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.ServiceManagement
 modules = ServiceManagement
+apinotes = true
 
 compilerOpts = -framework ServiceManagement
 linkerOpts = -framework ServiceManagement

@@ -2,6 +2,7 @@ depends = AVFAudio AVFoundation AppKit ApplicationServices AudioToolbox AudioUni
 language = Objective-C
 package = platform.CoreAudioKit
 modules = CoreAudioKit
+apinotes = true
 
 compilerOpts = -framework CoreAudioKit
 linkerOpts = -framework CoreAudioKit

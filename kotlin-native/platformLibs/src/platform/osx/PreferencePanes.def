@@ -2,6 +2,7 @@ depends = AppKit ApplicationServices CFCGTypes CFNetwork CloudKit Cocoa CoreData
 language = Objective-C
 package = platform.PreferencePanes
 modules = PreferencePanes
+apinotes = true
 
 compilerOpts = -framework PreferencePanes
 linkerOpts = -framework PreferencePanes

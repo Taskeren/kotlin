@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.ExecutionPolicy
 modules = ExecutionPolicy
+apinotes = true
 
 compilerOpts = -framework ExecutionPolicy
 linkerOpts = -framework ExecutionPolicy

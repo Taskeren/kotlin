@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.SensitiveContentAnalysis
 
 modules = SensitiveContentAnalysis
+apinotes = true
 compilerOpts = -framework SensitiveContentAnalysis
 linkerOpts = -framework SensitiveContentAnalysis

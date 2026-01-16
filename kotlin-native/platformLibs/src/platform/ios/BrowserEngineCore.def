@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.BrowserEngineCore
 
 modules = BrowserEngineCore
+apinotes = true
 compilerOpts = -framework BrowserEngineCore
 linkerOpts = -framework BrowserEngineCore

@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.TVUIKit
 modules = TVUIKit
+apinotes = true
 
 compilerOpts = -framework TVUIKit
 linkerOpts = -framework TVUIKit

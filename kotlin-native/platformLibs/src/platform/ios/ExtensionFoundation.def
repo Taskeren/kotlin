@@ -3,6 +3,7 @@ language = Objective-C
 package = platform.ExtensionFoundation
 
 modules = ExtensionFoundation
+apinotes = true
 compilerOpts = -framework ExtensionFoundation
 linkerOpts = -framework ExtensionFoundation
 

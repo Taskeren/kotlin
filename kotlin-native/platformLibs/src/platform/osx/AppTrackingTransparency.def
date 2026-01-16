@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.AppTrackingTransparency
 
 modules = AppTrackingTransparency
+apinotes = true
 compilerOpts = -framework AppTrackingTransparency
 linkerOpts = -framework AppTrackingTransparency

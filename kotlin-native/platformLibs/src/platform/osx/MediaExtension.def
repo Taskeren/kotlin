@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.MediaExtension
 
 modules = MediaExtension
+apinotes = true
 compilerOpts = -framework MediaExtension
 linkerOpts = -framework MediaExtension

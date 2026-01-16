@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.AccessorySetupKit
 
 modules = AccessorySetupKit
+apinotes = true
 compilerOpts = -framework AccessorySetupKit
 linkerOpts = -framework AccessorySetupKit

@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.Cinematic
 
 modules = Cinematic
+apinotes = true
 compilerOpts = -framework Cinematic
 linkerOpts = -framework Cinematic

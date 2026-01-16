@@ -2,5 +2,6 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Fou
 language = Objective-C
 package = platform.MetalPerformanceShadersGraph
 modules = MetalPerformanceShadersGraph
+apinotes = true
 compilerOpts = -framework MetalPerformanceShadersGraph
 linkerOpts = -framework MetalPerformanceShadersGraph

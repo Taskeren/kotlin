@@ -130,6 +130,7 @@ private class ObjCMethodStubBuilder(
                 isStret
         )
         annotations += buildObjCMethodAnnotations(methodAnnotation)
+        method.swiftName?.let { annotations += AnnotationStub.ObjC.ObjCName(swiftName = it) }
         kotlinMethodParameters = method.getKotlinParameters(context, forConstructorOrFactory = false)
         external = (container !is ObjCProtocol)
         modality = when (container) {
@@ -439,6 +440,9 @@ internal abstract class ObjCContainerStubBuilder(
 
     private val classifier = context.getKotlinClassFor(container, isMeta)
 
+    private val objcNameAnnotation: AnnotationStub.ObjC.ObjCName? =
+            container.swiftName?.let { AnnotationStub.ObjC.ObjCName(swiftName = it) }
+
     private val externalObjCAnnotation = when (container) {
         is ObjCProtocol -> {
             /*
@@ -548,7 +552,7 @@ internal abstract class ObjCContainerStubBuilder(
                 constructors = methods.filterIsInstance<ConstructorStub>(),
                 origin = origin,
                 modality = modality,
-                annotations = listOf(externalObjCAnnotation),
+                annotations = listOfNotNull(externalObjCAnnotation, objcNameAnnotation),
                 interfaces = interfaces,
                 companion = companion
         )
@@ -682,18 +686,18 @@ private class ObjCPropertyStubBuilder(
             is ObjCCategory -> ClassifierStubType(context.getKotlinClassFor(container.clazz, isMeta = property.getter.isClass))
         }
         val origin = StubOrigin.ObjCProperty(property, container)
-        val annotations = if (isDeprecatedCategoryProperty) {
-            listOf(AnnotationStub.Deprecated(message = "Use instance property instead", replaceWith = "", level = DeprecationLevel.WARNING))
-        } else {
-            emptyList()
+        val annotations = mutableListOf<AnnotationStub>()
+        if (isDeprecatedCategoryProperty) {
+            annotations += AnnotationStub.Deprecated(message = "Use instance property instead", replaceWith = "", level = DeprecationLevel.WARNING)
         }
+        property.swiftName?.let { annotations += AnnotationStub.ObjC.ObjCName(swiftName = it) }
         return listOf(PropertyStub(
                 mangleSimple(property.name),
                 kotlinType.toStubIrType(),
                 kind,
                 modality,
                 receiver,
-                annotations.toMutableList(),
+                annotations,
                 origin = origin
         ))
     }

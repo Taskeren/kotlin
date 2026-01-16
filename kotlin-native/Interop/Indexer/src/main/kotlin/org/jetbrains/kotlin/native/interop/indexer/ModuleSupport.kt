@@ -6,6 +6,13 @@ import java.nio.file.Files
 
 data class ModulesInfo(val topLevelHeaders: List<IncludeInfo>, val ownHeaders: Set<String>, val modules: List<String>)
 
+/**
+ * Clang flags required for module support and API Notes.
+ * -fmodules: enables clang modules
+ * -fapinotes-modules: enables reading API Notes annotations (like SwiftName) from .apinotes files
+ */
+val MODULE_FLAGS = listOf("-fmodules", "-fapinotes-modules")
+
 fun getModulesInfo(compilation: Compilation, modules: List<String>): ModulesInfo {
     if (modules.isEmpty()) return ModulesInfo(emptyList(), emptySet(), emptyList())
 
@@ -44,17 +51,18 @@ private fun buildModulesInfo(
 internal open class ModularCompilation(compilation: Compilation) : Compilation by compilation, Disposable {
 
     companion object {
-        private const val moduleCacheFlag = "-fmodules-cache-path="
+        private const val MODULE_CACHE_FLAG = "-fmodules-cache-path="
     }
 
-    private val moduleCacheDirectory = if (compilation.compilerArgs.none { it.startsWith(moduleCacheFlag) }) {
+    private val moduleCacheDirectory = if (compilation.compilerArgs.none { it.startsWith(MODULE_CACHE_FLAG) }) {
         Files.createTempDirectory("ModuleCache").toAbsolutePath().toFile()
     } else {
         null
     }
 
     override val compilerArgs: List<String> = compilation.compilerArgs +
-            listOfNotNull("-fmodules", moduleCacheDirectory?.let { "$moduleCacheFlag${it}" })
+            MODULE_FLAGS +
+            listOfNotNull(moduleCacheDirectory?.let { "$MODULE_CACHE_FLAG$it" })
 
     override fun dispose() {
         moduleCacheDirectory?.deleteRecursively()

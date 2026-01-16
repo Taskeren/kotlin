@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase Foundation Secur
 language = Objective-C
 package = platform.IOSurface
 modules = IOSurface
+apinotes = true
 
 compilerOpts = -framework IOSurface
 linkerOpts = -framework IOSurface

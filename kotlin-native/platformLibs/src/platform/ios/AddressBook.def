@@ -2,6 +2,7 @@ depends = CFCGTypes CoreFoundation CoreFoundationBase darwin posix
 language = Objective-C
 package = platform.AddressBook
 modules = AddressBook
+apinotes = true
 
 compilerOpts = -framework AddressBook
 linkerOpts = -framework AddressBook

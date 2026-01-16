@@ -2,6 +2,7 @@ depends = CoreAudioTypes CoreFoundationBase darwin posix
 language = Objective-C
 package = platform.CoreAudio
 modules = CoreAudio
+apinotes = true
 
 compilerOpts = -framework CoreAudio
 linkerOpts = -framework CoreAudio

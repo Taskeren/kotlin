@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.CoreLocation
 
 modules = _LocationEssentials
+apinotes = true
 compilerOpts = -framework _LocationEssentials
 linkerOpts = -framework _LocationEssentials

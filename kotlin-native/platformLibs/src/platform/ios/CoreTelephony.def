@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase Foundation Secur
 language = Objective-C
 package = platform.CoreTelephony
 modules = CoreTelephony
+apinotes = true
 
 compilerOpts = -framework CoreTelephony
 linkerOpts = -framework CoreTelephony

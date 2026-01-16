@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.ParavirtualizedGraphics
 
 modules = ParavirtualizedGraphics
+apinotes = true
 compilerOpts = -framework ParavirtualizedGraphics
 linkerOpts = -framework ParavirtualizedGraphics

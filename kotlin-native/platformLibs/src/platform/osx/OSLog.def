@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.OSLog
 modules = OSLog
+apinotes = true
 
 compilerOpts = -framework OSLog
 linkerOpts = -framework OSLog

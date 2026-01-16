@@ -3,4 +3,5 @@ language = Objective-C
 package = platform.UIKit
 
 modules = UIUtilities
+apinotes = true
 compilerOpts = -framework UIUtilities

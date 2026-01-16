@@ -2,6 +2,7 @@ depends = AppKit ApplicationServices CFCGTypes CFNetwork CloudKit Cocoa CoreData
 language = Objective-C
 package = platform.SecurityInterface
 modules = SecurityInterface
+apinotes = true
 
 compilerOpts = -framework SecurityInterface
 linkerOpts = -framework SecurityInterface

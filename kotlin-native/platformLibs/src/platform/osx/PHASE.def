@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.PHASE
 
 modules = PHASE
+apinotes = true
 compilerOpts = -framework PHASE
 linkerOpts = -framework PHASE

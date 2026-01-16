@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.CoreImage
 modules = CoreImage
+apinotes = true
 
 compilerOpts = -framework CoreImage
 linkerOpts = -framework CoreImage

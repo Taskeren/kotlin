@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.ExtensionKit
 
 modules = ExtensionKit
+apinotes = true
 compilerOpts = -framework ExtensionKit
 linkerOpts = -framework ExtensionKit

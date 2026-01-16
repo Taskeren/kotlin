@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.MediaAccessibility
 modules = MediaAccessibility
+apinotes = true
 
 compilerOpts = -framework MediaAccessibility
 linkerOpts = -framework MediaAccessibility

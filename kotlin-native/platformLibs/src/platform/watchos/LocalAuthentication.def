@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.LocalAuthentication
 
 modules = LocalAuthentication
+apinotes = true
 compilerOpts = -framework LocalAuthentication
 linkerOpts = -framework LocalAuthentication

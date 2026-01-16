@@ -2,5 +2,6 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.IntentsUI
 modules = IntentsUI
+apinotes = true
 compilerOpts = -framework IntentsUI
 linkerOpts = -framework IntentsUI

@@ -2,6 +2,7 @@ depends = CFCGTypes CoreFoundation CoreFoundationBase darwin libkern posix
 language = Objective-C
 package = platform.IOKit
 modules = IOKit
+apinotes = true
 
 compilerOpts = -framework IOKit
 linkerOpts = -framework IOKit

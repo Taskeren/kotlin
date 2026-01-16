@@ -2,6 +2,7 @@ depends = CFCGTypes CoreFoundation CoreFoundationBase darwin posix
 language = Objective-C
 package = platform.CoreServices
 modules = CoreServices
+apinotes = true
 
 compilerOpts = -framework CoreServices
 linkerOpts = -framework CoreServices

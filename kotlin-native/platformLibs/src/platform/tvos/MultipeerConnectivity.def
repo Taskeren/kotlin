@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Cor
 language = Objective-C
 package = platform.MultipeerConnectivity
 modules = MultipeerConnectivity
+apinotes = true
 
 compilerOpts = -framework MultipeerConnectivity
 linkerOpts = -framework MultipeerConnectivity

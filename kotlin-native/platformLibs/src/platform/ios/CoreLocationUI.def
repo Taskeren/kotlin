@@ -3,5 +3,6 @@ language = Objective-C
 package = platform.CoreLocationUI
 
 modules = CoreLocationUI
+apinotes = true
 compilerOpts = -framework CoreLocationUI
 linkerOpts = -framework CoreLocationUI

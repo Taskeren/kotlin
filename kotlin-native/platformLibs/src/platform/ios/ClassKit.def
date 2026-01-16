@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreFoundation CoreFoundationBase CoreGraphics Fou
 language = Objective-C
 package = platform.ClassKit
 modules = ClassKit
+apinotes = true
 
 compilerOpts = -framework ClassKit
 linkerOpts = -framework ClassKit

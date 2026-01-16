@@ -2,6 +2,7 @@ depends = CFCGTypes CFNetwork CoreAudio CoreAudioTypes CoreFoundation CoreFounda
 language = Objective-C
 package = platform.VideoToolbox
 modules = VideoToolbox
+apinotes = true
 
 compilerOpts = -framework VideoToolbox
 linkerOpts = -framework VideoToolbox

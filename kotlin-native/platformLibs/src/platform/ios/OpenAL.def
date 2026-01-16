@@ -2,6 +2,7 @@ depends = darwin posix
 language = Objective-C
 package = platform.OpenAL
 modules = OpenAL
+apinotes = true
 
 compilerOpts = -framework OpenAL
 linkerOpts = -framework OpenAL
