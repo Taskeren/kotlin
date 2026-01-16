@@ -138,12 +138,10 @@ internal class JsAstMapperVisitor(
     }
 
     override fun visitVariableDeclaration(ctx: JavaScriptParser.VariableDeclarationContext): JsVars.JsVar {
-        val originalId = ctx.assignable().identifier()?.text
-            ?: reportError("Only identifier parameters are supported yet", ctx)
-        val id = scopeContext.localNameFor(originalId)
+        val assignable = visitNode<JsAssignable>(ctx.assignable())
         val initialization = ctx.singleExpression()?.let { visitNode<JsExpression>(it) }
 
-        return JsVars.JsVar(id, initialization).applyLocation(ctx)
+        return JsVars.JsVar(assignable, initialization).applyLocation(ctx)
     }
 
     override fun visitEmptyStatement_(ctx: JavaScriptParser.EmptyStatement_Context): JsEmpty {
@@ -531,11 +529,9 @@ internal class JsAstMapperVisitor(
     }
 
     override fun visitFormalParameterArg(ctx: JavaScriptParser.FormalParameterArgContext): JsParameter {
-        val identifier = ctx.assignable().identifier()
-            ?: reportError("Only identifier parameters are supported yet", ctx)
-        val paramName = scopeContext.localNameFor(identifier.text)
+        val assignable = visitNode<JsAssignable>(ctx.assignable())
 
-        return JsParameter(paramName)
+        return JsParameter(assignable)
             .applyLocation(ctx)
             .applyComments(ctx)
     }
@@ -545,7 +541,7 @@ internal class JsAstMapperVisitor(
             ?: reportError("Only identifier rest parameters are supported yet", ctx)
         val paramName = scopeContext.localNameFor(identifier.text)
 
-        return JsParameter(paramName, isRest = true)
+        return JsParameter(JsAssignable.Named(paramName).applyLocation(identifier), isRest = true)
             .applyLocation(ctx)
             .applyComments(ctx)
     }
@@ -1082,8 +1078,24 @@ internal class JsAstMapperVisitor(
         reportError("Classes are not supported yet", ctx)
     }
 
-    override fun visitAssignable(ctx: JavaScriptParser.AssignableContext): JsNode? {
-        raiseParserException("Not yet implemented", ctx)
+    override fun visitAssignable(ctx: JavaScriptParser.AssignableContext): JsAssignable {
+        ctx.identifier()?.let {
+            return JsAssignable.Named(scopeContext.localNameFor(it.text)).applyLocation(ctx)
+        }
+
+        ctx.keyword()?.let {
+            return JsAssignable.Named(scopeContext.localNameFor(it.text)).applyLocation(ctx)
+        }
+
+        ctx.arrayLiteral()?.let {
+            return JsAssignable.Pattern(visitNode<JsArrayLiteral>(it)).applyLocation(ctx)
+        }
+
+        ctx.objectLiteral()?.let {
+            return JsAssignable.Pattern(visitNode<JsObjectLiteral>(it)).applyLocation(ctx)
+        }
+
+        raiseParserException("Invalid assignable '${ctx.text}'", ctx)
     }
 
     override fun visitObjectLiteral(ctx: JavaScriptParser.ObjectLiteralContext): JsObjectLiteral {

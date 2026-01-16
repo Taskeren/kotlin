@@ -37,7 +37,7 @@ sealed class JsPropertyInitializer : SourceInfoAwareJsNode() {
             return KeyValue(
                 labelExpr.deepCopy(),
                 valueExpr.deepCopy()
-            ).withMetadataFrom<KeyValue>(this)
+            ).withMetadataFrom(this)
         }
 
         override fun toString() = "$labelExpr: $valueExpr"
@@ -65,9 +65,45 @@ sealed class JsPropertyInitializer : SourceInfoAwareJsNode() {
         override fun deepCopy(): Spread {
             return Spread(
                 expression.deepCopy(),
-            ).withMetadataFrom<Spread>(this)
+            ).withMetadataFrom(this)
         }
 
         override fun toString() = "...$expression"
+    }
+
+    class Binding(
+        labelExpr: JsExpression,
+        valueExpr: JsExpression,
+    ) : JsPropertyInitializer() {
+        var labelExpr: JsExpression = labelExpr
+            private set
+        var valueExpr: JsExpression = valueExpr
+            private set
+
+        override fun accept(v: JsVisitor) {
+            v.visitBindingPropertyInitializer(this)
+        }
+
+        override fun acceptChildren(visitor: JsVisitor) {
+            visitor.accept(labelExpr)
+            visitor.accept(valueExpr)
+        }
+
+        override fun traverse(v: JsVisitorWithContext, ctx: JsContext<*>) {
+            if (v.visit(this, ctx)) {
+                labelExpr = v.accept(labelExpr)
+                valueExpr = v.accept(valueExpr)
+            }
+            v.endVisit(this, ctx)
+        }
+
+        override fun deepCopy(): Binding {
+            return Binding(
+                labelExpr.deepCopy(),
+                valueExpr.deepCopy()
+            ).withMetadataFrom(this)
+        }
+
+        override fun toString() = "$labelExpr: $valueExpr"
     }
 }

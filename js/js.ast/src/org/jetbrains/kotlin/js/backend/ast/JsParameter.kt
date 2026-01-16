@@ -7,18 +7,19 @@ package org.jetbrains.kotlin.js.backend.ast
  * A JavaScript parameter.
  */
 class JsParameter(
-    private var name: JsName,
+    private var assignable: JsAssignable,
     isRest: Boolean
 ) : SourceInfoAwareJsNode(), HasName {
     var isRest: Boolean = isRest
         private set
 
-    constructor(name: JsName) : this(name, false)
+    constructor(name: JsName) : this(JsAssignable.Named(name), false)
+    constructor(assignable: JsAssignable) : this(assignable, false)
 
-    override fun getName() = name
+    override fun getName() = (assignable as? HasName)?.name
 
-    override fun setName(name: JsName) {
-        this.name = name
+    override fun setName(name: JsName?) {
+        (assignable as? HasName)?.name = name
     }
 
     override fun accept(v: JsVisitor) {
@@ -31,6 +32,6 @@ class JsParameter(
     }
 
     override fun deepCopy(): JsParameter {
-        return JsParameter(name, isRest).withMetadataFrom(this)
+        return JsParameter(assignable, isRest).withMetadataFrom(this)
     }
 }

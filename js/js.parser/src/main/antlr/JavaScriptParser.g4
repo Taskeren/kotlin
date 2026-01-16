@@ -362,6 +362,26 @@ propertyAssignment
     | identifierName                                                     # PropertyShorthand
     ;
 
+objectBindingPattern
+    : '{' propertyBindingPattern? (',' propertyBindingPattern)* '}'
+    ;
+
+propertyBindingPattern
+    : bindingElement
+    | bindingElement ':' identifierName
+    ;
+
+bindingElement
+    : bindingTarget ('=' singleExpression)?
+    ;
+
+bindingTarget
+    : identifierName
+    | objectBindingPattern
+    | arrayBindingPattern
+    | Ellipsis bindingTarget
+    ;
+
 propertyName
     : identifierName
     | StringLiteral

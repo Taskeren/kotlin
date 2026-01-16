@@ -66,15 +66,15 @@ class JsVars : SourceInfoAwareJsNode, JsStatement, Iterable<JsVars.JsVar> {
      * A single variable-value binding.
      */
     class JsVar(
-        private var name: JsName,
+        private var assignable: JsAssignable,
         var initExpression: JsExpression? = null
     ) : SourceInfoAwareJsNode(), HasName {
-        override fun getName(): JsName {
-            return this.name
-        }
+        constructor(name: JsName, initExpression: JsExpression? = null) : this(JsAssignable.Named(name), initExpression)
 
-        override fun setName(name: JsName) {
-            this.name = name
+        override fun getName() = (assignable as? HasName)?.name
+
+        override fun setName(name: JsName?) {
+            (assignable as? HasName)?.name = name
         }
 
         override fun accept(v: JsVisitor) {
@@ -95,9 +95,9 @@ class JsVars : SourceInfoAwareJsNode, JsStatement, Iterable<JsVars.JsVar> {
         }
 
         override fun deepCopy(): JsVar {
-            if (initExpression == null) return JsVar(name)
+            if (initExpression == null) return JsVar(assignable)
 
-            return JsVar(this.name, initExpression?.deepCopy()).withMetadataFrom(this)
+            return JsVar(assignable.deepCopy(), initExpression?.deepCopy()).withMetadataFrom(this)
         }
     }
 

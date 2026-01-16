@@ -150,6 +150,9 @@ abstract class JsVisitor {
     open fun visitSpreadPropertyInitializer(x: JsPropertyInitializer.Spread): Unit =
             visitPropertyInitializer(x)
 
+    open fun visitBindingPropertyInitializer(x: JsPropertyInitializer.Binding): Unit =
+            visitPropertyInitializer(x)
+
     open fun visitRegExp(x: JsRegExp): Unit =
             visitElement(x)
 
@@ -209,6 +212,15 @@ abstract class JsVisitor {
 
     open fun visitSpread(spread: JsSpread): Unit =
         visitElement(spread)
+
+    open fun visitAssignable(assignable: JsAssignable): Unit =
+        visitElement(assignable)
+
+    open fun visitNamedAssignable(assignable: JsAssignable.Named): Unit =
+        visitAssignable(assignable)
+
+    open fun visitPatternAssignable(assignable: JsAssignable.Pattern): Unit =
+        visitAssignable(assignable)
 
     protected open fun visitElement(node: JsNode) {
     }
