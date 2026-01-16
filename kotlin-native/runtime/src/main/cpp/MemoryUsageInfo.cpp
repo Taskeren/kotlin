@@ -34,7 +34,7 @@ size_t kotlin::peakResidentSetSizeBytes() noexcept {
 #include <libproc.h>
 #else
 // libproc.h is not shipped on non-macOS, but the function is still defined there.
-int proc_pid_rusage(int pid, int flavor, rusage_info_t* buffer)
+extern "C" int proc_pid_rusage(int pid, int flavor, rusage_info_t* buffer)
 	__OSX_AVAILABLE_STARTING(__MAC_10_9, __IPHONE_7_0);
 #endif
 
