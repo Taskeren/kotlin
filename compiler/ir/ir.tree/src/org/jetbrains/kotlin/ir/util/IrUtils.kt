@@ -1270,7 +1270,7 @@ fun IrFactory.createStaticFunctionWithReceivers(
 
         annotations = oldFunction.annotations
 
-        copyValueParametersToStatic(oldFunction, origin, dispatchReceiverType, typeParameterMap)
+        returnType = remap(returnType)
 
         // TODO: think on moving this logic inside [copyValueParametersToStatic]
         parameters.forEachIndexed { index, parameter ->
