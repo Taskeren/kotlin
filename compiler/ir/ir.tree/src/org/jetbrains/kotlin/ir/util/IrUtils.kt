@@ -1272,6 +1272,8 @@ fun IrFactory.createStaticFunctionWithReceivers(
 
         returnType = remap(returnType)
 
+        copyValueParametersToStatic(oldFunction, origin, dispatchReceiverType, typeParameterMap)
+
         // TODO: think on moving this logic inside [copyValueParametersToStatic]
         parameters.forEachIndexed { index, parameter ->
             val oldParam = oldFunction.parameters[index]
